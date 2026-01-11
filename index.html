@@ -1,14 +1,66 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뷰스타 쪼 블로그</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <header>
+        <div class="header-content">
+            <h1>뷰스타 쪼 블로그</h1>
+            <p class="subtitle">뷰티, 패션, 그리고 일상의 기록</p>
+        </div>
+    </header>
+
+    <nav>
+        <a href="https://blog.naver.com/borareview" target="_blank">블로그 바로가기</a>
+    </nav>
+
+    <main>
+        <section class="introduction">
+            <div class="container">
+                <h2>새로운 뷰티를 만나다</h2>
+                <p>안녕하세요! 뷰티, 패션, 그리고 소중한 일상을 공유하는 뷰스타 쪼입니다. 저의 시선으로 바라본 다채로운 뷰티 트렌드와 솔직한 제품 리뷰, 그리고 삶의 작은 반짝임들을 이곳에서 만나보세요. 여러분의 하루가 더욱 특별해지기를 바랍니다.</p>
+            </div>
+        </section>
+
+        <section class="featured-posts">
+            <div class="container">
+                <h2>추천 포스트</h2>
+                <div class="post-grid">
+                    <div class="post-card">
+                        <img src="https://via.placeholder.com/350x250/FFC0CB/333333?text=Skincare+Magic" alt="Skincare">
+                        <div class="post-content">
+                            <h3>피부 속부터 빛나는 스킨케어 루틴</h3>
+                            <p>계절의 변화에도 끄떡없는 건강한 피부를 위한 저만의 스킨케어 비법을 공개합니다.</p>
+                        </div>
+                    </div>
+                    <div class="post-card">
+                        <img src="https://via.placeholder.com/350x250/FFD700/333333?text=Fashion+Finds" alt="Fashion">
+                        <div class="post-content">
+                            <h3>이번 시즌 놓치지 말아야 할 패션 아이템</h3>
+                            <p>평범한 일상도 런웨이로 만들어 줄 시즌 베스트 패션 아이템들을 소개합니다.</p>
+                        </div>
+                    </div>
+                    <div class="post-card">
+                        <img src="https://via.placeholder.com/350x250/E6E6FA/333333?text=Daily+Vibes" alt="Daily Life">
+                        <div class="post-content">
+                            <h3>햇살 좋은 날, 나만의 힐링 타임</h3>
+                            <p>복잡한 생각은 잠시 내려놓고, 저와 함께하는 소소하지만 확실한 행복의 순간들.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 뷰스타 쪼 블로그. All Rights Reserved.</p>
+    </footer>
+
+    <script src="main.js"></script>
 </body>
 </html>
