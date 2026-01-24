@@ -27,7 +27,7 @@
             display: flex; flex-direction: column; align-items: center; min-height: 100vh;
         }
 
-        /* --- 상단 헤더 (엠블럼형 & 사각형 프로필 & 괄호 타이틀) --- */
+        /* --- 상단 헤더 영역 (고정) --- */
         .top-container { text-align: center; padding-top: 15px; width: 100%; }
         header { display: flex; flex-direction: column; align-items: center; color: white; }
         .header-main { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 2px; }
@@ -39,21 +39,21 @@
         .social-links a { width: 25px; height: 25px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; text-decoration: none; border: 1px solid rgba(255,255,255,0.3); }
         .social-links a svg { width: 12px; height: 12px; }
 
-        /* --- [핵심] 메인 레이아웃 (세로 폭 20% 압축) --- */
+        /* --- 메인 레이아웃 (세로 폭 20% 압축 고정) --- */
         .main-container {
             display: flex;
             flex-direction: column;
             width: 92%;
             max-width: 480px; 
             gap: var(--main-gap); 
-            padding: 10px 0 30px;
+            padding: 10px 0 20px;
             align-items: center;
         }
         
         .section-card {
             background-color: var(--card-bg);
             border-radius: 30px;
-            padding: 14px 20px; /* 압축된 세로 패딩 */
+            padding: 14px 20px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             box-sizing: border-box;
             width: 100%;
@@ -62,37 +62,55 @@
 
         .section-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; color: #333; text-align: center; }
 
+        /* 입력 및 결과 박스 */
         .calc-group { margin-bottom: 8px; }
         .calc-label { display: block; font-size: 0.8rem; color: #666; margin-bottom: 3px; font-weight: 500; }
         .calc-input, .calc-select { width: 100%; padding: 8px 12px; border: 1px solid #eee; border-radius: 10px; font-size: 0.95rem; outline: none; box-sizing: border-box; background-color: white; font-family: inherit; }
-        
-        /* 결과 박스 레이아웃 */
         .res-box { flex: 1; background: #f0f3ff; border-radius: 15px; padding: 12px; text-align: center; margin-top: 5px; box-sizing: border-box; }
         .res-box .val { font-size: 1.4rem; font-weight: 700; color: #333; }
         .res-box .label { font-size: 0.75rem; color: #888; margin-top: 3px; font-weight: 500; }
         .res-box.active { background: #fff0f6; }
         .res-box.active .val { color: var(--point-pink); }
-        
         .avg-result-box { background: #eefaf3; border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 10px; }
 
         /* 핫딜 아이템 리스트 */
         .deal-group { width: 100%; display: flex; flex-direction: column; gap: 10px; }
         .link-item { display: flex; align-items: center; background: #fff; border: 1px solid #eee; border-radius: 20px; padding: 10px; text-decoration: none; width: 100%; box-sizing: border-box; }
-        .link-thumb { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; margin-right: 12px; flex-shrink: 0; }
+        .link-thumb { width: 45px; height: 45px; border-radius: 10px; object-fit: cover; margin-right: 12px; flex-shrink: 0; }
         .link-text { font-size: 1.05rem; font-weight: 500; color: #2c2c2c; line-height: 1.3; flex-grow: 1; letter-spacing: -0.5px; }
         .effect-img { width: 50px; height: 35px; border-radius: 5px; object-fit: cover; margin-left: 10px; flex-shrink: 0; border: 1px solid #f0f0f0; }
 
+        /* 별자리 카드 */
         .horo-card { background-color: var(--gold-bg); border-radius: 30px; padding: 14px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #ffeeba; width: 100%; box-sizing: border-box; overflow: hidden; }
+        .horo-content { font-size: 0.82rem; color: #444; line-height: 1.7; margin-top: 10px; text-align: left; padding: 15px; background: white; border-radius: 22px; display: none; border: 1px dashed #ffeeba; }
+        .lucky-item-card { margin-top: 12px; padding: 10px; background: #fff0f6; border-radius: 18px; display: flex; align-items: center; text-decoration: none; border: 1px solid #ffdeeb; }
+        .lucky-item-card img { width: 50px; height: 50px; border-radius: 12px; margin-right: 12px; object-fit: cover; }
+        .lucky-item-reason { font-size: 0.72rem; color: var(--point-pink); font-weight: 700; margin-bottom: 2px; display: block; }
+        .lucky-item-name { font-size: 0.9rem; font-weight: 500; color: #333; }
 
-        footer { width: 100%; text-align: center; padding-bottom: 30px; }
-        .footer-text { font-size: 0.65rem; color: rgba(255, 255, 255, 0.8); line-height: 1.6; padding: 0 20px; }
+        /* 방문객 카운터 */
+        .visitor-counter {
+            margin: 15px 0 5px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(0, 0, 0, 0.15);
+            padding: 8px 18px;
+            border-radius: 20px;
+            display: flex;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .visitor-counter b { color: #fff; font-weight: 700; }
+
+        footer { width: 100%; text-align: center; padding-bottom: 30px; display: flex; flex-direction: column; align-items: center; }
+        .footer-text { font-size: 0.65rem; color: rgba(255, 255, 255, 0.7); line-height: 1.6; padding: 0 20px; margin-top: 10px; }
 
         @media (max-width: 480px) {
             .section-card, .horo-card { padding: 12px 18px; }
         }
     </style>
 </head>
-<body>
+<body onload="initCounter()">
 
     <div class="top-container">
         <header>
@@ -109,19 +127,15 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 </a>
             </div>
-            <p class="notice-style" style="font-size:0.65rem; color:rgba(255,255,255,0.7); margin-top:5px;">*모든 입력 자료는 저장되지 않습니다.</p>
         </header>
     </div>
 
     <div class="main-container">
         <div class="section-card">
             <div class="section-title">📈 평균 키 & 미용 몸무게 통합 분석</div>
-            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
-                <div class="calc-group" style="flex: 1;"><label class="calc-label">성별</label><select id="analGender" class="calc-select" onchange="calcAnalysis()"><option value="female" selected>여성</option><option value="male">남성</option></select></div>
-                <div class="calc-group" style="flex: 1;"><label class="calc-label">나이대</label><select id="analAge" class="calc-select" onchange="calcAnalysis()"><option value="20">20대</option><option value="30">30대</option><option value="40">40대</option><option value="50">50대+</option></select></div>
-            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 8px;"><div class="calc-group" style="flex: 1;"><label class="calc-label">성별</label><select id="analGender" class="calc-select" onchange="calcAnalysis()"><option value="female" selected>여성</option><option value="male">남성</option></select></div><div class="calc-group" style="flex: 1;"><label class="calc-label">나이대</label><select id="analAge" class="calc-select" onchange="calcAnalysis()"><option value="20">20대</option><option value="30">30대</option><option value="40">40대</option><option value="50">50대+</option></select></div></div>
             <div class="calc-group"><label class="calc-label">당신의 키(cm)</label><input type="number" id="analH" class="calc-input" placeholder="예: 163" oninput="calcAnalysis()"></div>
-            <div class="avg-result-box"><div id="analAvgResult" style="color:var(--nice-green); font-size:0.85rem; font-weight:500; text-align:center;">키를 입력하면 분석 결과가 나옵니다.</div></div>
+            <div class="avg-result-box"><div id="analAvgResult" style="color:var(--nice-green); font-size:0.85rem; font-weight:500; text-align:center;">키를 입력하세요.</div></div>
             <div style="display: flex; gap: 8px;"><div class="res-box" style="background:#f8f9fa;"><div class="val" id="stdW">-</div><div class="label">표준 체중</div></div><div class="res-box active"><div class="val" id="beautyW">-</div><div class="label">미용 체중</div></div></div>
         </div>
 
@@ -132,11 +146,8 @@
 
         <div class="section-card">
             <div class="section-title">📊 BMI 지수 계산기</div>
-            <div style="display: flex; gap: 8px;">
-                <div class="calc-group" style="flex: 1;"><label class="calc-label">키(cm)</label><input type="number" id="bmiH" class="calc-input" placeholder="163" oninput="calcBMI()"></div>
-                <div class="calc-group" style="flex: 1;"><label class="calc-label">몸무게(kg)</label><input type="number" id="bmiW" class="calc-input" placeholder="50" oninput="calcBMI()"></div>
-            </div>
-            <div class="res-box"><div class="val" id="bmiRes">0.0</div><div class="label" id="bmiStatus">수치를 입력해 주세요</div></div>
+            <div style="display: flex; gap: 8px;"><div class="calc-group" style="flex: 1;"><label class="calc-label">키(cm)</label><input type="number" id="bmiH" class="calc-input" placeholder="163" oninput="calcBMI()"></div><div class="calc-group" style="flex: 1;"><label class="calc-label">몸무게(kg)</label><input type="number" id="bmiW" class="calc-input" placeholder="50" oninput="calcBMI()"></div></div>
+            <div class="res-box"><div class="val" id="bmiRes">0.0</div><div class="label" id="bmiStatus">수치를 입력하세요.</div></div>
         </div>
 
         <div class="deal-group">
@@ -146,8 +157,18 @@
 
         <div class="horo-card">
             <div class="section-title" style="color: #856404;">🔮 별자리 운세 & 행운 아이템</div>
-            <div class="calc-group"><select id="zodiacSelect" class="calc-select" onchange="showHoroscope()"><option value="">별자리를 선택하세요</option><option value="1">물병자리</option><option value="2">물고기자리</option><option value="3">양자리</option><option value="4">황소자리</option><option value="5">쌍둥이자리</option><option value="6">게자리</option><option value="7">사자자리</option><option value="8">처녀자리</option><option value="9">천칭자리</option><option value="10">전갈자리</option><option value="11">사수자리</option><option value="12">염소자리</option></select></div>
-            <div id="horoContent" style="font-size: 0.8rem; line-height: 1.6; margin-top: 10px; display: none; background: white; padding: 12px; border-radius: 15px;"></div>
+            <div class="calc-group">
+                <select id="zodiacSelect" class="calc-select" onchange="showHoroscope()">
+                    <option value="">별자리를 선택하세요</option>
+                    <option value="1">물병자리 (1.20~2.18)</option><option value="2">물고기자리 (2.19~3.20)</option>
+                    <option value="3">양자리 (3.21~4.19)</option><option value="4">황소자리 (4.20~5.20)</option>
+                    <option value="5">쌍둥이자리 (5.21~6.21)</option><option value="6">게자리 (6.22~7.22)</option>
+                    <option value="7">사자자리 (7.23~8.22)</option><option value="8">처녀자리 (8.23~9.23)</option>
+                    <option value="9">천칭자리 (9.24~10.22)</option><option value="10">전갈자리 (10.23~11.22)</option>
+                    <option value="11">사수자리 (11.23~12.24)</option><option value="12">염소자리 (12.25~1.19)</option>
+                </select>
+            </div>
+            <div id="horoContent" class="horo-content"></div>
             <div id="luckyItemArea"></div>
         </div>
 
@@ -159,6 +180,10 @@
     </div>
 
     <footer>
+        <div class="visitor-counter">
+            <span>Today: <b id="today-count">...</b></span>
+            <span>Total: <b id="total-count">...</b></span>
+        </div>
         <p class="footer-text">
             *위 링크로 구매시 크리에이터에게 소정의 수수료가 지급될 수 있으나 상품가격에 변동은 없습니다.<br>
             이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
@@ -166,42 +191,70 @@
     </footer>
 
     <script>
-        // [복구] 표준 및 미용 체중 분석 데이터 (145~187cm 전체 범위)
+        // --- [한국 시간 기준 측정 로직] ---
+        async function initCounter() {
+            const namespace = "borareview_v2_fix"; 
+            const kstDate = new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()).replace(/\. /g, '').replace(/\./g, '');
+            const todayKey = `today_${kstDate}`;
+            try {
+                const totalRes = await fetch(`https://api.counterapi.dev/v1/${namespace}/total/up`);
+                const totalData = await totalRes.json();
+                document.getElementById('total-count').innerText = totalData.count.toLocaleString();
+                const todayRes = await fetch(`https://api.counterapi.dev/v1/${namespace}/${todayKey}/up`);
+                const todayData = await todayRes.json();
+                document.getElementById('today-count').innerText = todayData.count.toLocaleString();
+            } catch (e) { document.getElementById('today-count').innerText = "1"; document.getElementById('total-count').innerText = "100+"; }
+        }
+
+        // --- [체중 분석 로직] ---
         function calcAnalysis() {
             const avgData = { male: { 20: 174.4, 30: 174.9, 40: 173.2, 50: 170.5 }, female: { 20: 161.3, 30: 161.9, 40: 160.2, 50: 157.6 } };
             const g = document.getElementById('analGender').value, a = document.getElementById('analAge').value, h = parseFloat(document.getElementById('analH').value);
             const resBox = document.getElementById('analAvgResult'), std = document.getElementById('stdW'), bty = document.getElementById('beautyW');
-            
             if (h > 0) {
                 const avgH = avgData[g][a], diff = (h - avgH).toFixed(1);
                 resBox.innerHTML = `평균 키: <b>${avgH}cm</b> (${diff >= 0 ? diff + 'cm 큼' : Math.abs(diff) + 'cm 작음'})`;
-                
-                // 공식 기반 계산 복구 (표준: BMI 22, 미용: BMI 18.5~19)
-                const stdWeight = (Math.pow(h/100, 2) * 22).toFixed(1);
-                const beautyWeight = (Math.pow(h/100, 2) * 19).toFixed(1);
-                
-                std.innerText = stdWeight + "kg";
-                bty.innerText = beautyWeight + "kg";
+                std.innerText = (Math.pow(h/100, 2) * 22).toFixed(1) + "kg";
+                bty.innerText = (Math.pow(h/100, 2) * 19).toFixed(1) + "kg";
             }
         }
-
         function calcBMI() {
             const h = document.getElementById('bmiH').value / 100, w = document.getElementById('bmiW').value, res = document.getElementById('bmiRes'), status = document.getElementById('bmiStatus');
             if (h > 0 && w > 0) { const bmi = (w / (h * h)).toFixed(1); res.innerText = bmi; status.innerText = bmi < 18.5 ? "저체중" : bmi < 23 ? "정상" : "과체중 이상"; }
         }
 
+        // --- [복구된 12종 풍수템 및 로테이션 로직] ---
         const fengShuiItems = [
-            { name: "무소음 벽시계", reason: "시간을 관리하면 행운이 따릅니다. 질서 있는 흐름이 운을 부릅니다.", url: "https://link.coupang.com/a/dyKEhn", img: "https://t3a.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/d9ee/3273e539fae3caef8f9226d37e77f8849891af26b1eb5f434d636de6c851.png" },
-            { name: "장스탠드", reason: "밝은 빛의 힘이 필요합니다. 공간의 구석을 비춰 성공의 운기를 깨우세요.", url: "https://ozip.me/PkR1BgA?af", img: "https://prs.ohou.se/apne2/any/uploads/productions/v1-410686675410944.jpg?w=1280&h=1280&c=c" }
+            { name: "싱잉볼", reason: "맑은 소리가 필요합니다. 현관에서 기운을 정화시켜보세요.", url: "https://link.coupang.com/a/dyKsFd", img: "https://t4c.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/cef7/0bc01026da60025c185c3140e2c75143dfa47f067f2d004af9588d69848d.jpg" },
+            { name: "액막이 북어", reason: "나쁜 기운은 현관에서 막으세요. 복의 통로를 지키는 비결입니다.", url: "https://link.coupang.com/a/dyKusA", img: "https://t5a.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/396e/25b4bf5ff64f9001915d9ddc11d88d1b19bfd0cfaf022c3d6994d198d22d.jpg" },
+            { name: "장스탠드", reason: "밝은 빛의 힘이 필요합니다. 공간의 구석을 비춰 성공운을 깨우세요.", url: "https://ozip.me/PkR1BgA?af", img: "https://prs.ohou.se/apne2/any/uploads/productions/v1-410686675410944.jpg?w=1280&h=1280&c=c" },
+            { name: "카페트", reason: "바닥의 따뜻한 기운을 보호하여 재물운을 안정적으로 가두세요.", url: "https://ozip.me/hxmqIiX?af", img: "https://image.ohousecdn.com/i/bucketplace-v2-development/uploads/productions/169838760927234776.jpg?w=1280&h=1280&c=c" },
+            { name: "장스탠드 조명", reason: "빛의 힘이 강력하게 필요할 때입니다. 생동감을 연출하세요.", url: "https://link.coupang.com/a/dyKxh1", img: "https://thumbnail6.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/08/28/12/6/6bca4f1b-9de9-4990-8c62-3f50a0833a49.png" },
+            { name: "거실용 TV", reason: "즐거운 파동을 거실에 가득 채워 정체된 기운을 순환시키세요.", url: "https://link.coupang.com/a/dyKzhL", img: "https://thumbnail6.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/10/15/15/2/2816e610-eebc-479c-b994-70880671f140.jpg" },
+            { name: "포근한 패브릭 소파", reason: "부드러운 기운으로 휴식의 질을 높여 내면을 정돈하세요.", url: "https://ozip.me/r40SOYF?af", img: "https://image.ohousecdn.com/i/bucketplace-v2-development/uploads/openapi/4167132/1721871518212.jpg?w=1280&h=1280&c=c" },
+            { name: "싱그러운 식물", reason: "푸릇한 생명력을 배치하여 정체된 운기를 깨워보세요.", url: "https://link.coupang.com/a/dyKCdg", img: "https://thumbnail10.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/180584597005505-fb4ce459-a8ae-462d-8bda-b4e16cb26501.jpg" },
+            { name: "레트로 벽시계", reason: "질서 있는 흐름을 통해 운이 들어오는 길을 활짝 여세요.", url: "https://link.coupang.com/a/dyKEhn", img: "https://t3a.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/d9ee/3273e539fae3caef8f9226d37e77f8849891af26b1eb5f434d636de6c851.png" },
+            { name: "시원한 실링팬", reason: "원활한 공기 소통이 재물과 복의 원만한 순환을 돕습니다.", url: "https://link.coupang.com/a/dyKFkf", img: "https://thumbnail1.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/12/08/14/9/0a67a9dc-ecaf-4a9a-971d-51296bc5040c.jpg" },
+            { name: "우드 수납장", reason: "정리 정돈을 통해 흐트러진 운기를 바로잡을 시기입니다.", url: "https://ozip.me/4ARjVhI?af", img: "https://prs.ohousecdn.com/apne2/any/uploads/productions/v1-393417029013504.jpg?w=1280&h=1280&c=c" },
+            { name: "가정용 홈사우나", reason: "따뜻한 기운으로 정체된 기를 시원하게 소통시키세요.", url: "https://link.coupang.com/a/dyKSYq", img: "https://thumbnail5.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/4f94/6c6381ff9643ca814ef14cd915e80d1e36b905111da517b18dc7930d9795.jpg" }
+        ];
+
+        const experts = [
+            "🔱 <b>오늘의 천체 흐름 정밀 분석</b><br>토성과 목성이 조화를 이루는 길일입니다. 공들여 온 일들이 결실을 맺기 시작하니 내실을 기하는 것이 유리합니다. 오후 2시에서 4시 사이가 당신의 운기가 가장 강력하게 빛나는 시간입니다.<br>🏠 <b>풍수 조언</b>: 현관을 밝게 유지하고 불필요한 영수증을 정리하여 기의 순환을 도우세요.",
+            "🔥 <b>오늘의 천체 흐름 정밀 분석</b><br>화성의 열정적인 에너지가 당신을 자극하는 날입니다. 새로운 결정을 내리기에 적합하지만 겸손함을 유지해야 유리합니다. 저녁 7시 이후 소중한 인연과의 대화에서 해답을 얻게 될 것입니다.<br>🏠 <b>풍수 조언</b>: 외부의 탁한 기운을 차단하세요. 현관 앞에 맑은 기운을 주는 물건을 두어 복의 통로를 관리하는 것이 좋습니다.",
+            "🌬️ <b>오늘의 천체 흐름 정밀 분석</b><br>원활한 소통의 문이 열리는 기분 좋은 날입니다. 창의적인 아이디어가 샘솟으니 중요한 기획은 오늘 마무리하세요. 푸른색 계열의 옷차림이 타인에게 신뢰감을 높여 운을 크게 돕습니다.<br>🏠 <b>풍수 조언</b>: 거실 화분의 잎을 정성스럽게 닦아주세요. 식물의 호흡이 원활해지는 만큼 당신의 운기도 함께 트이게 됩니다."
         ];
 
         function showHoroscope() {
             const content = document.getElementById('horoContent'), sign = document.getElementById('zodiacSelect').value, itemArea = document.getElementById('luckyItemArea');
             if(sign) {
                 content.style.display = 'block';
-                content.innerText = "오늘의 기운이 당신의 건강과 재물을 돕고 있습니다. 주변을 정리하고 긍정적인 마음을 유지하세요.";
-                const item = fengShuiItems[new Date().getDate() % fengShuiItems.length];
-                itemArea.innerHTML = `<a href="${item.url}" target="_blank" class="lucky-item-card" style="margin-top:12px; display:flex; align-items:center; background:#fff0f6; padding:10px; border-radius:15px; text-decoration:none; border:1px solid #ffdeeb;"><img src="${item.img}" style="width:50px; height:50px; border-radius:10px; margin-right:12px;"><div style="flex:1;"><span style="font-size:0.75rem; color:var(--point-pink); font-weight:700; display:block;">🏠 ${item.reason}</span><span style="font-size:0.95rem; color:#333; font-weight:500;">✨ 행운템: ${item.name}</span></div></a>`;
+                const now = new Date();
+                const dateSeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+                const combinedIndex = dateSeed + parseInt(sign);
+                content.innerHTML = experts[combinedIndex % experts.length];
+                const item = fengShuiItems[combinedIndex % fengShuiItems.length];
+                itemArea.innerHTML = `<a href="${item.url}" target="_blank" class="lucky-item-card"><img src="${item.img}"><div class="lucky-item-info"><span class="lucky-item-reason">🏠 ${item.reason}</span><span class="lucky-item-name">✨ 행운템: ${item.name}</span></div></a>`;
             } else { content.style.display = 'none'; itemArea.innerHTML = ''; }
         }
     </script>
