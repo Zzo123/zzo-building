@@ -60,6 +60,14 @@
         .footer-text { font-size: 0.65rem; color: rgba(255, 255, 255, 0.7); line-height: 1.6; padding: 0 | 20px; margin-top: 10px; }
         @media (max-width: 480px) { .section-card, .horo-card { padding: 12px 18px; } }
     </style>
+    <script>
+        // URL에 v=1 파라미터 강제 표시
+        if (!location.search.includes('v=1')) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('v', '1');
+            window.history.replaceState(null, '', url);
+        }
+    </script>
 </head>
 <body onload="initCounter()">
     <div style="display:none; visibility:hidden;">
