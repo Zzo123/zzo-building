@@ -17,6 +17,7 @@
             --accent-blue: #4d6ef5;
             --gold-bg: #fff9e6;
             --nice-green: #2e7d32;
+            --main-gap: 22px; /* [수정] 기존 45px에서 50% 축소 */
         }
 
         body {
@@ -26,71 +27,85 @@
             display: flex; flex-direction: column; align-items: center; min-height: 100vh;
         }
 
-        /* --- 상단 헤더 영역 (축소 레이아웃 고정) --- */
-        .top-container { text-align: center; padding-top: 10px; width: 100%; }
-        .profile-wrapper { position: relative; width: 100%; margin-bottom: -35px; z-index: 1; }
+        /* --- 상단 헤더 (간격 축소) --- */
+        .top-container { text-align: center; padding-top: var(--main-gap); width: 100%; }
+        .profile-wrapper { position: relative; width: 100%; margin-bottom: -45px; z-index: 1; }
         .profile-img {
-            width: 210px; height: auto; display: block; margin: 0 auto;
-            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+            width: 180px; height: auto; display: block; margin: 0 auto;
+            mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
         }
-        header { position: relative; z-index: 2; color: white; padding-bottom: 10px; }
-        header h1 { font-size: 2.1rem; margin: 0; font-weight: 700; letter-spacing: -1px; }
-        header p.subtitle { font-size: 0.95rem; margin-top: 5px; font-weight: 500; opacity: 0.95; }
+        header { position: relative; z-index: 2; color: white; }
+        header h1 { font-size: 1.8rem; margin: 0; font-weight: 700; letter-spacing: -1px; }
+        header p.subtitle { font-size: 0.85rem; margin: 4px 0 6px; font-weight: 500; opacity: 0.95; }
 
-        .social-links { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
+        .social-links { display: flex; justify-content: center; gap: 8px; margin-top: 5px; }
         .social-links a {
-            width: 32px; height: 32px; background: rgba(255,255,255,0.2);
+            width: 28px; height: 28px; background: rgba(255,255,255,0.2);
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
             color: white; text-decoration: none; border: 1px solid rgba(255,255,255,0.3);
-            font-size: 0.75rem; font-weight: 700; display: flex;
         }
-        .social-links a svg { width: 16px; height: 16px; }
+        .social-links a svg { width: 14px; height: 14px; }
 
-        .notice-style { font-size: 0.8rem; color: rgba(255, 255, 255, 0.85); font-weight: 400; line-height: 1.6; letter-spacing: -0.3px; }
+        .notice-style { font-size: 0.75rem; color: rgba(255, 255, 255, 0.85); font-weight: 400; line-height: 1.4; padding: 0 20px; margin-top: 10px; }
 
-        /* --- 메인 레이아웃 --- */
-        .main-container { display: flex; width: 95%; max-width: 1000px; gap: 20px; padding: 15px 0 30px; align-items: flex-start; }
-        .calc-column { display: flex; flex-direction: column; gap: 20px; flex: 1.1; min-width: 340px; }
-        .section-card { background-color: var(--card-bg); border-radius: 35px; padding: 25px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); box-sizing: border-box; text-align: left; }
+        /* --- 메인 레이아웃 (섹션 간격 22px 고정) --- */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            width: 92%;
+            max-width: 480px; 
+            gap: var(--main-gap); 
+            padding: var(--main-gap) 0;
+            align-items: center;
+        }
         
-        .section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; color: #333; }
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 35px;
+            padding: 25px 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            width: 100%;
+            overflow: hidden; 
+        }
+
+        /* 제목 가운데 정렬 유지 */
+        .section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; color: #333; text-align: center; }
+
+        /* 입력 폼 및 결과 박스 */
         .calc-group { margin-bottom: 12px; }
         .calc-label { display: block; font-size: 0.85rem; color: #666; margin-bottom: 6px; font-weight: 500; }
-        .calc-input, .calc-select { width: 100%; padding: 10px 15px; border: 1px solid #eee; border-radius: 12px; font-size: 1rem; outline: none; box-sizing: border-box; background-color: white; font-family: inherit; }
-
-        .res-box { flex: 1; background: #f8f9fa; border-radius: 18px; padding: 15px; text-align: center; margin-top: 5px; }
-        .res-box .val { font-size: 1.5rem; font-weight: 700; color: #333; }
-        .res-box .label { font-size: 0.8rem; color: #888; margin-top: 5px; font-weight: 500; }
+        .calc-input, .calc-select { width: 100%; padding: 12px 15px; border: 1px solid #eee; border-radius: 14px; font-size: 1rem; outline: none; box-sizing: border-box; background-color: white; font-family: inherit; }
+        
+        .res-box { background: #f0f3ff; border-radius: 20px; padding: 18px; text-align: center; margin-top: 10px; width: 100%; box-sizing: border-box; }
+        .res-box .val { font-size: 1.6rem; font-weight: 700; color: #333; }
+        .res-box .label { font-size: 0.85rem; color: #888; margin-top: 6px; font-weight: 500; }
         .res-box.active { background: #fff0f6; }
         .res-box.active .val { color: var(--point-pink); }
-        .avg-result-box { background: #eefaf3; border-radius: 12px; padding: 12px; text-align: center; margin-bottom: 15px; }
-        .avg-result-text { color: var(--nice-green); font-weight: 500; font-size: 0.95rem; }
+        
+        .avg-result-box { background: #eefaf3; border-radius: 14px; padding: 14px; text-align: center; margin-bottom: 15px; }
 
-        /* 핫딜 리스트 스타일 */
-        .deal-column { flex: 0.9; min-width: 340px; }
-        .deal-card { background-color: var(--card-bg); border-radius: 35px; padding: 20px 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); box-sizing: border-box; }
-        .link-list { display: flex; flex-direction: column; gap: 10px; }
-        .link-item { display: flex; align-items: center; background: #fff; border: 1px solid #eee; border-radius: 20px; padding: 10px; text-decoration: none; transition: 0.2s; position: relative; overflow: hidden; }
-        .link-item:hover { transform: translateY(-3px); border-color: var(--point-pink); }
+        /* 핫딜 그룹 (아이템 간격도 50% 축소) */
+        .deal-group { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+        .link-item { display: flex; align-items: center; background: #fff; border: 1px solid #eee; border-radius: 22px; padding: 10px; text-decoration: none; transition: 0.2s; position: relative; overflow: hidden; width: 100%; box-sizing: border-box; }
         .link-thumb { width: 45px; height: 45px; border-radius: 10px; object-fit: cover; margin-right: 12px; flex-shrink: 0; }
         .link-text { font-size: 1.05rem; font-weight: 500; color: #2c2c2c; line-height: 1.3; flex-grow: 1; letter-spacing: -0.5px; }
-        .effect-img { width: 55px; height: 38px; border-radius: 6px; object-fit: cover; margin-left: 8px; flex-shrink: 0; border: 1px solid #f0f0f0; }
+        .effect-img { width: 55px; height: 38px; border-radius: 6px; object-fit: cover; margin-left: 10px; flex-shrink: 0; border: 1px solid #f0f0f0; }
 
-        /* 별자리 운세 & 행운 아이템 카드 */
-        .horo-card { background-color: var(--gold-bg); border-radius: 35px; padding: 25px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #ffeeba; }
-        .horo-content { font-size: 0.85rem; color: #444; line-height: 1.8; margin-top: 15px; text-align: left; padding: 18px; background: white; border-radius: 20px; display: none; border: 1px dashed #ffeeba; }
-        .lucky-item-card { 
-            margin-top: 15px; padding: 12px; background: #fff0f6; border-radius: 15px; 
-            display: flex; align-items: center; text-decoration: none; border: 1px solid #ffdeeb;
-            transition: 0.2s;
-        }
-        .lucky-item-card img { width: 50px; height: 50px; border-radius: 10px; margin-right: 12px; object-fit: cover; }
-        .lucky-item-info { flex: 1; }
-        .lucky-item-reason { font-size: 0.75rem; color: var(--point-pink); font-weight: 700; margin-bottom: 2px; display: block; }
+        /* 운세 카드 */
+        .horo-card { background-color: var(--gold-bg); border-radius: 35px; padding: 25px 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #ffeeba; width: 100%; box-sizing: border-box; overflow: hidden; }
+        .horo-content { font-size: 0.85rem; color: #444; line-height: 1.8; margin-top: 15px; text-align: left; padding: 18px; background: white; border-radius: 22px; display: none; border: 1px dashed #ffeeba; }
+        .lucky-item-card { margin-top: 15px; padding: 12px; background: #fff0f6; border-radius: 18px; display: flex; align-items: center; text-decoration: none; border: 1px solid #ffdeeb; transition: 0.2s; }
+        .lucky-item-card img { width: 55px; height: 55px; border-radius: 12px; margin-right: 14px; object-fit: cover; }
+        .lucky-item-reason { font-size: 0.75rem; color: var(--point-pink); font-weight: 700; margin-bottom: 3px; display: block; }
         .lucky-item-name { font-size: 0.95rem; font-weight: 500; color: #333; }
 
-        @media (max-width: 768px) { .main-container { flex-direction: column; } }
+        footer { width: 100%; text-align: center; padding-bottom: var(--main-gap); } 
+
+        @media (max-width: 480px) {
+            .section-card, .horo-card { padding: 22px 18px; }
+        }
     </style>
 </head>
 <body>
@@ -100,7 +115,7 @@
             <img src="https://postfiles.pstatic.net/MjAyNjAxMTFfMTkg/MDAxNzY4MTM3MzY5NzA0.JkDNXmOK1ElFjoSxuaRNFb2Jqy14c9A-vXRS-IcXrSwg.JUabhWGG1a5CxXsyJXAjc5RU4CXm3nSdM0dZOrEZJ58g.PNG/1.png?type=w966" alt="Profile" class="profile-img">
         </div>
         <header>
-            <div class="top-tag" style="font-size:0.8rem; margin-bottom:2px; opacity:0.9;">뷰스타 쪼</div>
+            <div class="top-tag" style="font-size:0.75rem; opacity:0.9;">뷰스타 쪼</div>
             <h1>borareview</h1>
             <p class="subtitle">당신을 위한 최저가 큐레이션</p>
             <div class="social-links">
@@ -109,69 +124,68 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 </a>
             </div>
-            <p class="notice-style" style="margin-top: 12px;">*모든 입력 자료는 저장, 수집되지 않습니다. 안심하시고 사용하세요.</p>
+            <p class="notice-style">*모든 입력 자료는 저장되지 않습니다. 안심하세요.</p>
         </header>
     </div>
 
     <div class="main-container">
-        <div class="calc-column">
-            <div class="section-card">
-                <div class="section-title">📊 BMI 지수 계산기</div>
-                <div style="display: flex; gap: 10px;">
-                    <div class="calc-group" style="flex: 1;"><label class="calc-label">키(cm)</label><input type="number" id="bmiH" class="calc-input" placeholder="163" oninput="calcBMI()"></div>
-                    <div class="calc-group" style="flex: 1;"><label class="calc-label">몸무게(kg)</label><input type="number" id="bmiW" class="calc-input" placeholder="50" oninput="calcBMI()"></div>
-                </div>
-                <div class="res-box" style="width:100%; background: #f0f3ff;"><div class="val" id="bmiRes">0.0</div><div class="label" id="bmiStatus">수치를 입력해 주세요</div></div>
+        <div class="section-card">
+            <div class="section-title">📊 BMI 지수 계산기</div>
+            <div style="display: flex; gap: 10px;">
+                <div class="calc-group" style="flex: 1;"><label class="calc-label">키(cm)</label><input type="number" id="bmiH" class="calc-input" placeholder="163" oninput="calcBMI()"></div>
+                <div class="calc-group" style="flex: 1;"><label class="calc-label">몸무게(kg)</label><input type="number" id="bmiW" class="calc-input" placeholder="50" oninput="calcBMI()"></div>
             </div>
-
-            <div class="section-card">
-                <div class="section-title">📈 평균 키 & 미용 몸무게 통합 분석</div>
-                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                    <div class="calc-group" style="flex: 1;"><label class="calc-label">성별</label><select id="analGender" class="calc-select" onchange="calcAnalysis()"><option value="female" selected>여성</option><option value="male">남성</option></select></div>
-                    <div class="calc-group" style="flex: 1;"><label class="calc-label">나이대 (평균비교)</label><select id="analAge" class="calc-select" onchange="calcAnalysis()"><option value="20">20대</option><option value="30">30대</option><option value="40">40대</option><option value="50">50대+</option></select></div>
-                </div>
-                <div class="calc-group"><label class="calc-label">당신의 키(cm)</label><input type="number" id="analH" class="calc-input" placeholder="예: 163" oninput="calcAnalysis()"></div>
-                <div class="avg-result-box"><div id="analAvgResult" class="avg-result-text">키를 입력하면 분석 결과가 나옵니다.</div></div>
-                <div style="display: flex; gap: 10px;"><div class="res-box"><div class="val" id="stdW">-</div><div class="label">표준 체중</div></div><div class="res-box active"><div class="val" id="beautyW">-</div><div class="label">미용 체중</div></div></div>
-                <p style="font-size: 0.75rem; color: #999; margin-top: 10px; text-align: center;">※ 여성: 145~174cm / 남성: 167~187cm 조회 가능</p>
-            </div>
-
-            <div class="horo-card">
-                <div class="section-title">🔮 별자리 운세 & 행운 아이템</div>
-                <div class="calc-group">
-                    <label class="calc-label">당신의 별자리</label>
-                    <select id="zodiacSelect" class="calc-select" onchange="showHoroscope()">
-                        <option value="">별자리를 선택하세요</option>
-                        <option value="1">물병자리 (1.20~2.18)</option><option value="2">물고기자리 (2.19~3.20)</option>
-                        <option value="3">양자리 (3.21~4.19)</option><option value="4">황소자리 (4.20~5.20)</option>
-                        <option value="5">쌍둥이자리 (5.21~6.21)</option><option value="6">게자리 (6.22~7.22)</option>
-                        <option value="7">사자자리 (7.23~8.22)</option><option value="8">처녀자리 (8.23~9.23)</option>
-                        <option value="9">천칭자리 (9.24~10.22)</option><option value="10">전갈자리 (10.23~11.22)</option>
-                        <option value="11">사수자리 (11.23~12.24)</option><option value="12">염소자리 (12.25~1.19)</option>
-                    </select>
-                </div>
-                <div id="horoContent" class="horo-content"></div>
-                <div id="luckyItemArea"></div>
-            </div>
+            <div class="res-box"><div class="val" id="bmiRes">0.0</div><div class="label" id="bmiStatus">수치를 입력해 주세요</div></div>
         </div>
 
-        <div class="deal-column">
-            <div class="deal-card">
-                <div class="section-title" style="color: var(--point-pink); font-size: 1rem;">🛒 쪼 전용 핫딜 리스트</div>
-                <div class="link-list">
-                    <a href="https://link.coupang.com/a/dyHzTw" target="_blank" class="link-item"><img src="https://m.blick.kr/web/product/extra/big/202411/db8e8a474be44f7e8c56419b7be6326f.png" class="link-thumb"><span class="link-text">대기업 보다 좋아서 쓰는 빔프로젝터</span><img src="https://postfiles.pstatic.net/MjAyNTA0MThfMTQg/MDAxNzQ0OTgxMDg0MDQ1.8lZw6vQg_UqZxQSjSqjI_50KhLbZzphSgu5FqZNmtCQg.yakdX1BU2kRR5xOVNhKx9vFx4LR-mNzv6kfvSQsc6cQg.JPEG/%EB%B9%94%ED%94%84%EB%A1%9C%EC%A0%9D%ED%84%B0.jpg?type=w966" class="effect-img"></a>
-                    <a href="#" target="_blank" class="link-item"><img src="https://cafe24img.poxo.com/manfidence/web/product/big/202409/06713d5e39ff4671b9e216177fccba20.jpg" class="link-thumb"><span class="link-text">서현의 몸매 비결? 빨간통 다이어트</span></a>
-                    <a href="https://link.coupang.com/a/dyGXsN" target="_blank" class="link-item"><img src="https://cdn.imweb.me/thumbnail/20251212/cb85cec76f249.jpg" class="link-thumb"><span class="link-text">집에서 하는 천국의 계단? 칼로리 순삭!</span></a>
-                    <a href="https://naver.me/5cqnj2Vn" target="_blank" class="link-item"><img src="https://sitem.ssgcdn.com/11/80/03/item/1000588038011_i1_750.jpg" class="link-thumb"><span class="link-text">평점 4.8 리얼 후기 가성비 러닝머신</span></a>
-                    <a href="https://link.coupang.com/a/dqIJZb" target="_blank" class="link-item"><img src="https://sitem.ssgcdn.com/01/83/31/item/1000433318301_i1_1200.jpg" class="link-thumb"><span class="link-text">효과 본 김남주 맥주 효모 핫딜</span><img src="https://postfiles.pstatic.net/MjAyNjAxMTNfNTIg/MDAxNzY4Mjk1NDI0NjAw.xR3WsmIqgkThSc0iAkxkA96EEVkDnA8avuOployLkzgg.E0-tmA4SPbTx_e6fkayYipe2myfRTDEdpiyLIP-FIR4g.JPEG/1.jpg?type=w966" class="effect-img"></a>
-                    <a href="https://kr.iherb.com/pr/now-foods-brewer-s-yeast-650-mg-200-tablets/48771?rcode=FEG9985" target="_blank" class="link-item"><img src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now02410/v/68.jpg" class="link-thumb"><span class="link-text">"가성비" 아이허브 맥주효모 1만원 대</span></a>
-                    <a href="https://oy.run/4qG1a95" target="_blank" class="link-item"><img src="https://postfiles.pstatic.net/MjAyNjAxMTJfNDIg/MDAxNzY4MTg3ODkwMjk4.5UAsq8Ytcukl1x-VqXJpZevIlqGlmPI5c8oD9M7eEi4g.zLDZALH89ApqENzxEeXkuAEdIgr3rbS40dzqGlveq_og.PNG/6.png?type=w966" class="link-thumb"><span class="link-text">야노시호 마시는 샐러드 최저가</span></a>
-                </div>
+        <div class="deal-group">
+            <a href="https://link.coupang.com/a/dyHzTw" target="_blank" class="link-item"><img src="https://m.blick.kr/web/product/extra/big/202411/db8e8a474be44f7e8c56419b7be6326f.png" class="link-thumb"><span class="link-text">대기업 보다 좋아서 쓰는 빔프로젝터</span><img src="https://postfiles.pstatic.net/MjAyNTA0MThfMTQg/MDAxNzQ0OTgxMDg0MDQ1.8lZw6vQg_UqZxQSjSqjI_50KhLbZzphSgu5FqZNmtCQg.yakdX1BU2kRR5xOVNhKx9vFx4LR-mNzv6kfvSQsc6cQg.JPEG/%EB%B9%94%ED%94%84%EB%A1%9C%EC%A0%9D%ED%84%B0.jpg?type=w966" class="effect-img"></a>
+            <a href="https://link.coupang.com/a/dyLnqT" target="_blank" class="link-item"><img src="https://cafe24img.poxo.com/manfidence/web/product/big/202409/06713d5e39ff4671b9e216177fccba20.jpg" class="link-thumb"><span class="link-text">서현의 몸매 비결? 빨간통 다이어트</span></a>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title">📈 평균 키 & 미용 몸무게 통합 분석</div>
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <div class="calc-group" style="flex: 1;"><label class="calc-label">성별</label><select id="analGender" class="calc-select" onchange="calcAnalysis()"><option value="female" selected>여성</option><option value="male">남성</option></select></div>
+                <div class="calc-group" style="flex: 1;"><label class="calc-label">나이대</label><select id="analAge" class="calc-select" onchange="calcAnalysis()"><option value="20">20대</option><option value="30">30대</option><option value="40">40대</option><option value="50">50대+</option></select></div>
             </div>
+            <div class="calc-group"><label class="calc-label">당신의 키(cm)</label><input type="number" id="analH" class="calc-input" placeholder="예: 163" oninput="calcAnalysis()"></div>
+            <div class="avg-result-box"><div id="analAvgResult" style="color:var(--nice-green); font-size:0.95rem; font-weight:500; text-align:center;">분석 결과가 여기에 표시됩니다.</div></div>
+            <div style="display: flex; gap: 10px;"><div class="res-box" style="background:#f8f9fa;"><div class="val" id="stdW">-</div><div class="label">표준 체중</div></div><div class="res-box active"><div class="val" id="beautyW">-</div><div class="label">미용 체중</div></div></div>
+            <p style="font-size: 0.7rem; color: #999; margin-top: 10px; text-align: center;">※ 여성: 145~174cm / 남성: 167~187cm 조회 가능</p>
+        </div>
+
+        <div class="deal-group">
+            <a href="https://link.coupang.com/a/dqIJZb" target="_blank" class="link-item"><img src="https://sitem.ssgcdn.com/01/83/31/item/1000433318301_i1_1200.jpg" class="link-thumb"><span class="link-text">효과 본 김남주 맥주 효모 핫딜</span><img src="https://postfiles.pstatic.net/MjAyNjAxMTNfNTIg/MDAxNzY4Mjk1NDI0NjAw.xR3WsmIqgkThSc0iAkxkA96EEVkDnA8avuOployLkzgg.E0-tmA4SPbTx_e6fkayYipe2myfRTDEdpiyLIP-FIR4g.JPEG/1.jpg?type=w966" class="effect-img"></a>
+            <a href="https://kr.iherb.com/pr/now-foods-brewer-s-yeast-650-mg-200-tablets/48771?rcode=FEG9985" target="_blank" class="link-item"><img src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now02410/v/68.jpg" class="link-thumb"><span class="link-text">"가성비" 아이허브 맥주효모 1만원 대</span></a>
+        </div>
+
+        <div class="horo-card">
+            <div class="section-title" style="color: #856404;">🔮 별자리 운세 & 행운 아이템</div>
+            <div class="calc-group">
+                <label class="calc-label">당신의 별자리</label>
+                <select id="zodiacSelect" class="calc-select" onchange="showHoroscope()">
+                    <option value="">별자리를 선택하세요</option>
+                    <option value="1">물병자리 (1.20~2.18)</option><option value="2">물고기자리 (2.19~3.20)</option>
+                    <option value="3">양자리 (3.21~4.19)</option><option value="4">황소자리 (4.20~5.20)</option>
+                    <option value="5">쌍둥이자리 (5.21~6.21)</option><option value="6">게자리 (6.22~7.22)</option>
+                    <option value="7">사자자리 (7.23~8.22)</option><option value="8">처녀자리 (8.23~9.23)</option>
+                    <option value="9">천칭자리 (9.24~10.22)</option><option value="10">전갈자리 (10.23~11.22)</option>
+                    <option value="11">사수자리 (11.23~12.24)</option><option value="12">염소자리 (12.25~1.19)</option>
+                </select>
+            </div>
+            <div id="horoContent" class="horo-content"></div>
+            <div id="luckyItemArea"></div>
+        </div>
+
+        <div class="deal-group">
+            <a href="https://link.coupang.com/a/dyGXsN" target="_blank" class="link-item"><img src="https://cdn.imweb.me/thumbnail/20251212/cb85cec76f249.jpg" class="link-thumb"><span class="link-text">집에서 하는 천국의 계단? 칼로리 순삭!</span></a>
+            <a href="https://naver.me/5cqnj2Vn" target="_blank" class="link-item"><img src="https://sitem.ssgcdn.com/11/80/03/item/1000588038011_i1_750.jpg" class="link-thumb"><span class="link-text">평점 4.8 리얼 후기 가성비 러닝머신</span></a>
+            <a href="https://oy.run/4qG1a95" target="_blank" class="link-item"><img src="https://postfiles.pstatic.net/MjAyNjAxMTJfNDIg/MDAxNzY4MTg3ODkwMjk4.5UAsq8Ytcukl1x-VqXJpZevIlqGlmPI5c8oD9M7eEi4g.zLDZALH89ApqENzxEeXkuAEdIgr3rbS40dzqGlveq_og.PNG/6.png?type=w966" class="link-thumb"><span class="link-text">야노시호 마시는 샐러드 최저가</span></a>
         </div>
     </div>
 
-    <footer style="width: 100%; text-align: center; padding: 20px 0 60px;">
+    <footer>
         <p class="notice-style">
             *위 링크로 구매시 크리에이터에게 소정의 수수료가 지급될 수 있으나 상품가격에 변동은 없습니다.<br>
             이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
@@ -180,65 +194,52 @@
 
     <script>
         const fengShuiItems = [
-            { name: "싱잉볼", reason: "소리로 마음의 평화를 찾으세요", url: "https://link.coupang.com/a/dylqj9", img: "https://t4c.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/cef7/0bc01026da60025c185c3140e2c75143dfa47f067f2d004af9588d69848d.jpg" },
-            { name: "액막이 북어 인형", reason: "나쁜 기운을 막고 복을 부릅니다", url: "https://link.coupang.com/a/dyluWi", img: "https://t5a.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/396e/25b4bf5ff64f9001915d9ddc11d88d1b19bfd0cfaf022c3d6994d198d22d.jpg" },
-            { name: "단스탠드 조명", reason: "어두운 구석을 밝혀 기를 순환시킵니다", url: "https://link.coupang.com/a/dylECn", img: "https://thumbnail6.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/08/28/12/6/6bca4f1b-9de9-4990-8c62-3f50a0833a49.png" },
-            { name: "프리미엄 TV", reason: "즐거운 에너지를 거실 가득 채우세요", url: "https://link.coupang.com/a/dyllkD", img: "https://thumbnail6.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/10/15/15/2/2816e610-eebc-479c-b994-70880671f140.jpg" },
-            { name: "포근한 패브릭 소파", reason: "편안한 휴식이 재물운을 높입니다", url: "https://link.coupang.com/a/dyllDk", img: "https://thumbnail6.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/10/15/15/2/2816e610-eebc-479c-b994-70880671f140.jpg" },
-            { name: "공기정화 식물", reason: "생동감 넘치는 초록빛으로 생기를 더하세요", url: "https://link.coupang.com/a/dylPf1", img: "https://thumbnail10.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/180584597005505-fb4ce459-a8ae-462d-8bda-b4e16cb26501.jpg" },
-            { name: "무소음 벽시계", reason: "막힘없는 시간의 흐름이 운을 부릅니다", url: "https://link.coupang.com/a/dylW32", img: "https://t3a.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/d9ee/3273e539fae3caef8f9226d37e77f8849891af26b1eb5f434d636de6c851.png" },
-            { name: "세련된 실링팬", reason: "공기의 흐름을 바꿔 정체된 기를 깨웁니다", url: "https://link.coupang.com/a/dylY95", img: "https://thumbnail1.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/12/08/14/9/0a67a9dc-ecaf-4a9a-971d-51296bc5040c.jpg" },
-            { name: "인테리어 러그", reason: "따뜻한 바닥 기운이 가정을 화목하게 합니다", url: "https://ozip.me/s8yzsgV?af", img: "https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/169838760927234776.jpg?w=1280&h=1280&c=c" },
-            { name: "장스탠드 조명", reason: "높은 곳에서 비추는 빛이 명예운을 높입니다", url: "https://ozip.me/mbZcw5L?af", img: "https://prs.ohou.se/apne2/any/uploads/productions/v1-410686675410944.jpg?w=1280&h=1280&c=c" },
-            { name: "공간 분리 파티션", reason: "나쁜 기운의 직진을 막아 안전을 지킵니다", url: "#", img: "https://t4c.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/cef7/0bc01026da60025c185c3140e2c75143dfa47f067f2d004af9588d69848d.jpg" },
-            { name: "고급스러운 카페트", reason: "공간의 무게감을 잡아 안정을 줍니다", url: "#", img: "https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/169838760927234776.jpg?w=1280&h=1280&c=c" }
+            { name: "싱잉볼", reason: "맑은 소리가 필요합니다. 현관에 두고 외출시, 들어올 때 한 번씩 사용하며 기운을 정화시켜보세요.", url: "https://link.coupang.com/a/dyKsFd", img: "https://t4c.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/cef7/0bc01026da60025c185c3140e2c75143dfa47f067f2d004af9588d69848d.jpg" },
+            { name: "액막이 북어", reason: "나쁜 기운은 현관에서 막으세요. 입구에 걸어두어 복의 통로를 깨끗하게 지키는 비방입니다.", url: "https://link.coupang.com/a/dyKusA", img: "https://t5a.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/396e/25b4bf5ff64f9001915d9ddc11d88d1b19bfd0cfaf022c3d6994d198d22d.jpg" },
+            { name: "장스탠드", reason: "밝은 빛의 힘이 필요합니다. 공간의 구석진 곳을 비춰 막힌 성공의 운기를 일깨우세요.", url: "https://ozip.me/PkR1BgA?af", img: "https://prs.ohou.se/apne2/any/uploads/productions/v1-410686675410944.jpg?w=1280&h=1280&c=c" },
+            { name: "카페트", reason: "바닥의 따뜻한 기운을 보호해야 합니다. 온기를 유지해 재물운을 안정적으로 가두세요.", url: "https://ozip.me/hxmqIiX?af", img: "https://image.ohousecdn.com/i/bucketplace-v2-development/uploads/productions/169838760927234776.jpg?w=1280&h=1280&c=c" },
+            { name: "장스탠드 조명", reason: "빛의 힘이 강력하게 필요 할 때입니다. 위에서 아래로 흐르는 활발한 생동감을 연출해 보세요.", url: "https://link.coupang.com/a/dyKxh1", img: "https://thumbnail6.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/08/28/12/6/6bca4f1b-9de9-4990-8c62-3f50a0833a49.png" },
+            { name: "TV", reason: "즐거움과 오락이 필요한 시기입니다. 긍정적인 파동을 거실 가득 채워 기운을 순환시키세요.", url: "https://link.coupang.com/a/dyKzhL", img: "https://thumbnail6.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/10/15/15/2/2816e610-eebc-479c-b994-70880671f140.jpg" },
+            { name: "포근한 패브릭 소파", reason: "편안함과 부드러운 기운이 필요합니다. 휴식의 질을 높여 내면의 기운을 차분하게 정돈하는 비결입니다.", url: "https://ozip.me/r40SOYF?af", img: "https://image.ohousecdn.com/i/bucketplace-v2-development/uploads/openapi/4167132/1721871518212.jpg?w=1280&h=1280&c=c" },
+            { name: "식물", reason: "푸릇한 싱그러움이 필요한 시기입니다. 생동감 넘치는 식물을 배치하여 정체된 운기를 깨워보세요.", url: "https://link.coupang.com/a/dyKCdg", img: "https://thumbnail10.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/180584597005505-fb4ce459-a8ae-462d-8bda-b4e16cb26501.jpg" },
+            { name: "레트로 무소음 벽시계", reason: "시간을 관리하면 큰 행운이 따릅니다. 질서 있는 흐름을 통해 운이 들어오는 길을 활짝 여세요.", url: "https://link.coupang.com/a/dyKEhn", img: "https://t3a.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/d9ee/3273e539fae3caef8f9226d37e77f8849891af26b1eb5f434d636de6c851.png" },
+            { name: "시원한 실링팬", reason: "공기 흐름을 시원하게 트여주세요. 원활한 공기 소통이 재물과 복의 원만한 순환을 돕습니다.", url: "https://link.coupang.com/a/dyKFkf", img: "https://thumbnail1.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/12/08/14/9/0a67a9dc-ecaf-4a9a-971d-51296bc5040c.jpg" },
+            { name: "수납장", reason: "정리 정돈이 필요한 시기입니다. 물건의 자리를 찾아줌으로써 흐트러진 운기를 바로잡으세요.", url: "https://ozip.me/4ARjVhI?af", img: "https://prs.ohousecdn.com/apne2/any/uploads/productions/v1-393417029013504.jpg?w=1280&h=1280&c=c" },
+            { name: "홈사우나", reason: "따뜻한 기운으로 혈을 뚫어야 하는 시기입니다. 몸의 체온을 높여 정체된 기를 시원하게 소통시키세요.", url: "https://link.coupang.com/a/dyKSYq", img: "https://thumbnail5.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/4f94/6c6381ff9643ca814ef14cd915e80d1e36b905111da517b18dc7930d9795.jpg" }
         ];
 
         function showHoroscope() {
             const content = document.getElementById('horoContent'), sign = document.getElementById('zodiacSelect').value, itemArea = document.getElementById('luckyItemArea');
             const experts = [
-                "🔱 <b>오늘의 천체 흐름 분석</b><br>토성과 목성이 조화를 이루는 매우 드문 길일입니다. 당신이 정성 들여 가꿔온 일들이 드디어 결실을 맺을 준비가 되었습니다. '지(地)'의 기운이 특히 강해지는 시기이므로 성급한 변화보다는 내실을 기하는 것이 유리합니다. 대인관계에서는 부드러운 화법이 큰 행운을 불러올 것이니 미소를 잊지 마세요. 오늘 오후 2시에서 4시 사이가 가장 기운이 좋습니다.<br>🏠 <b>풍수 전문가의 조언</b><br>침실 북서쪽에 파란색이나 은색 소품을 두어 금전운을 정체되지 않게 하세요. 낡은 영수증이나 서류는 오늘 즉시 정리하는 것이 기의 순환을 돕는 비방입니다.",
-                "🔥 <b>오늘의 천체 흐름 분석</b><br>화성의 열정적인 에너지가 당신의 열두 번째 하우스에 머무는 날입니다. 새로운 시작에 대한 열망이 강해지겠지만, 지금은 마무리와 정리가 우선되어야 할 시점입니다. 내면의 소리에 귀를 기울이고 명상을 통해 에너지를 비축한다면 조만간 큰 기회가 찾아올 것입니다. 주변의 시샘을 살 수 있으니 성과를 널리 알리기보다는 겸손함을 유지하세요.<br>🏠 <b>풍수 전문가의 조언</b><br>현관에 작은 거울을 두어 외부에서 들어오는 탁한 기운을 반사시키면 가족들의 건강운이 상승합니다. 싱그러운 화분 잎을 정성스럽게 닦아주며 집안 곳곳에 생기를 불어넣어 보세요."
+                "🔱 <b>오늘의 천체 흐름 정밀 분석</b><br>토성과 목성이 조화를 이루는 길일입니다. 당신이 공들여 온 일들이 결실을 맺기 시작하는 흐름에 있습니다. '지(地)'의 기운이 특히 강하므로, 내실을 기하는 것이 유리합니다. 오후 2시에서 4시 사이가 가장 강력한 행운의 시간대입니다.",
+                "🔥 <b>오늘의 천체 흐름 정밀 분석</b><br>화성의 열정적인 에너지가 당신의 기운을 자극하는 날입니다. 새로운 프로젝트를 시작하거나 중요한 결정을 내리기에 적합하며, 타인보다는 자신과의 싸움에 집중할 때 큰 행운이 찾아올 것입니다."
             ];
-
             if(sign) {
                 content.style.display = 'block';
-                content.innerHTML = experts[(new Date().getDate() + parseInt(sign)) % experts.length];
-                
-                // [로테이션 수정] 날짜 시드 + 별자리 번호를 조합하여 24시간 고정 로테이션
                 const today = new Date();
                 const dateSeed = today.getFullYear() * 1000 + (today.getMonth() + 1) * 100 + today.getDate();
+                const expertIndex = (dateSeed + parseInt(sign)) % experts.length;
+                content.innerHTML = experts[expertIndex];
                 const itemIndex = (dateSeed + parseInt(sign)) % fengShuiItems.length;
                 const item = fengShuiItems[itemIndex];
-
-                itemArea.innerHTML = `
-                    <a href="${item.url}" target="_blank" class="lucky-item-card">
-                        <img src="${item.img}">
-                        <div class="lucky-item-info">
-                            <span class="lucky-item-reason">${item.reason}</span>
-                            <span class="lucky-item-name">${item.name}</span>
-                        </div>
-                    </a>`;
+                itemArea.innerHTML = `<a href="${item.url}" target="_blank" class="lucky-item-card"><img src="${item.img}"><div class="lucky-item-info"><span class="lucky-item-reason">🏠 ${item.reason}</span><span class="lucky-item-name">✨ 행운템: ${item.name}</span></div></a>`;
             } else { content.style.display = 'none'; itemArea.innerHTML = ''; }
         }
 
         function calcAnalysis() {
             const avgData = { male: { 20: 174.4, 30: 174.9, 40: 173.2, 50: 170.5 }, female: { 20: 161.3, 30: 161.9, 40: 160.2, 50: 157.6 } };
-            // [데이터 보강] 1cm 단위 전수 입력 완료
-            const fData = { 145:[46.2, 38.9], 146:[46.8, 39.4], 147:[47.5, 40.0], 148:[48.1, 40.5], 149:[48.8, 41.1], 150:[49.5, 41.6], 151:[50.1, 42.2], 152:[50.8, 42.7], 153:[51.4, 43.3], 154:[52.1, 43.9], 155:[52.8, 44.5], 156:[53.5, 45.0], 157:[54.2, 45.6], 158:[54.9, 46.2], 159:[55.6, 46.8], 160:[56.3, 47.4], 161:[57.0, 48.0], 162:[57.7, 48.6], 163:[58.4, 49.2], 164:[59.1, 49.8], 165:[59.8, 50.4], 166:[60.6, 51.0], 167:[61.3, 51.6], 168:[62.0, 52.2], 169:[62.8, 52.8], 170:[63.5, 53.5], 171:[64.3, 54.1], 172:[65.0, 54.7], 173:[65.8, 55.4], 174:[66.6, 56.0] };
+            const fData = { 145:[46.2, 38.9], 150:[49.5, 41.6], 155:[52.8, 44.5], 160:[56.3, 47.4], 163:[58.4, 49.2], 165:[59.8, 50.4], 168:[62.0, 52.2], 170:[63.5, 53.5], 174:[66.6, 56.0] };
             const mData = { 167:[61.35, 52.98], 168:[62.09, 53.62], 169:[62.80, 54.26], 170:[63.58, 54.91], 171:[64.33, 55.55], 172:[65.08, 56.20], 173:[65.84, 56.86], 174:[66.60, 57.52], 175:[67.37, 58.18], 176:[68.14, 58.85], 177:[68.92, 59.52], 178:[69.70, 60.19], 179:[70.49, 60.87], 180:[71.28, 61.56], 181:[72.07, 62.24], 182:[72.87, 62.93], 183:[73.67, 63.62], 184:[74.48, 64.32], 185:[75.29, 65.02], 186:[76.11, 65.73], 187:[76.93, 66.44] };
-
             const g = document.getElementById('analGender').value, a = document.getElementById('analAge').value, h = parseFloat(document.getElementById('analH').value);
             const resBox = document.getElementById('analAvgResult'), std = document.getElementById('stdW'), bty = document.getElementById('beautyW');
-
             if (h > 0) {
                 const avgH = avgData[g][a], diff = (h - avgH).toFixed(1);
-                resBox.innerHTML = `해당 연령 평균 키: <b>${avgH}cm</b><br>평균보다 ${diff >= 0 ? diff + 'cm 크네요! 👍' : Math.abs(diff) + 'cm 작아요.'}`;
+                resBox.innerHTML = `평균 키: <b>${avgH}cm</b><br>평균보다 ${diff >= 0 ? diff + 'cm 크네요! 👍' : Math.abs(diff) + 'cm 작아요.'}`;
                 const data = g === 'female' ? fData : mData;
                 const hInt = Math.floor(h);
                 if (data[hInt]) { std.innerText = data[hInt][0] + "kg"; bty.innerText = data[hInt][1] + "kg"; }
                 else { std.innerText = "-"; bty.innerText = "-"; }
-            } else { resBox.innerText = "키를 입력하면 분석 결과가 나옵니다."; std.innerText = "-"; bty.innerText = "-"; }
+            }
         }
 
         function calcBMI() {
