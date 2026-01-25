@@ -54,6 +54,48 @@
         #bmi-result-box.overweight b, #bmi-result-box.overweight span { color: #f39c12; }
         #bmi-result-box.obese b, #bmi-result-box.obese span { color: #e74c3c; }
         #bmi-category { font-size: 1rem; font-weight: 500; margin-left: 8px; }
+
+        /* Tooltip Styles */
+        .info-tooltip { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+        .info-icon {
+            display: inline-block;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            background: #ccc; color: white;
+            text-align: center; font-size: 12px; line-height: 16px;
+            margin-left: 6px; cursor: pointer;
+        }
+        .tooltip-text {
+            visibility: hidden;
+            width: 220px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position the tooltip above the icon */
+            left: 50%;
+            margin-left: -110px; /* Use half of the width to center */
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+            font-weight: 400;
+        }
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Result Animation */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body onload="initCounter()">
@@ -76,14 +118,19 @@
         <div class="section-card">
             <div class="section-title">📈 평균 키 & 미용 몸무게 분석</div>
             <div class="input-group">
-                <select id="gender" onchange="calc()"><option value="female">여성</option><option value="male">남성</option></select>
-                <select id="age" onchange="calc()"><option value="20">20대</option><option value="30">30대</option><option value="40">40대</option><option value="50">50대+</option></select>
+                <select id="gender"><option value="female">여성</option><option value="male">남성</option></select>
+                <select id="age"><option value="20">20대</option><option value="30">30대</option><option value="40">40대</option><option value="50">50대+</option></select>
             </div>
-            <input type="number" id="h" placeholder="당신의 키(cm) 입력" oninput="debouncedCalc()">
+            <input type="number" id="h" placeholder="당신의 키(cm) 입력">
             <div id="msg" class="avg-msg">키를 입력해 주세요.</div>
             <div class="res-container">
                 <div class="res-box"><span>표준 체중</span><b id="std">-</b></div>
-                <div class="res-box active"><span>미용 체중</span><b id="beauty">-</b></div>
+                <div class="res-box active">                    <div class="info-tooltip">
+                        <span>미용 체중</span>
+                        <span class="info-icon">i</span>
+                        <div class="tooltip-text">미용 체중은 의학적 기준이 아닌, 일반적으로 보기 좋다고 여겨지는 비공식적인 수치입니다.</div>
+                    </div>
+                    <b id="beauty">-</b></div>
             </div>
         </div>
 
@@ -100,8 +147,8 @@
         <div class="section-card">
             <div class="section-title">📊 BMI 지수 계산기</div>
             <div class="input-group">
-                <input type="number" id="bh" placeholder="키(cm)" oninput="debouncedBmi()">
-                <input type="number" id="bw" placeholder="몸무게(kg)" oninput="debouncedBmi()">
+                <input type="number" id="bh" placeholder="키(cm)">
+                <input type="number" id="bw" placeholder="몸무게(kg)">
             </div>
             <div id="bmi-result-box" class="res-box" style="margin-top:10px;">
                 BMI 지수: <b id="br">0.0</b><span id="bmi-category"></span>

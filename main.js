@@ -1,23 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Intersection Observer for animations (existing code)
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                entry.target.style.animationDelay = `${index * 150}ms`;
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.post-card').forEach(card => {
-        observer.observe(card);
-    });
-});
-
-// --- Start of calculator and page logic ---
-
-// Debounce utility to prevent excessive calculations on input
+// --- Utility Functions ---
 function debounce(func, delay) {
     let timeout;
     return function(...args) {
@@ -26,7 +7,7 @@ function debounce(func, delay) {
     };
 }
 
-// Data for calculators and horoscopes
+// --- Data ---
 const AVG_HEIGHT_DATA = { female:{20:161.3,30:161.9,40:160.2,50:157.6}, male:{20:174.4,30:174.9,40:173.2,50:170.5} };
 const F_ITEMS = [
     {n:"싱잉볼", r:"맑은 소리로 집안의 탁한 기운을 정화하고 안정을 찾으세요.", u:"https://link.coupang.com/a/dyKsFd", i:"https://t4c.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/cef7/0bc01026da60025c185c3140e2c75143dfa47f067f2d004af9588d69848d.jpg"},
@@ -39,7 +20,7 @@ const F_ITEMS = [
     {n:"싱그러운 식물", r:"살아있는 생명력을 배치하여 정체된 공간에 생동감을 더하세요.", u:"https://link.coupang.com/a/dyKCdg", i:"https://thumbnail10.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/180584597005505-fb4ce459-a8ae-462d-8bda-b4e16cb26501.jpg"},
     {n:"인테리어 시계", r:"질서 있는 흐름을 통해 운이 들어오는 길을 환하게 열어줍니다.", u:"https://link.coupang.com/a/dyKEhn", i:"https://t3a.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/d9ee/3273e539fae3caef8f9226d37e77f8849891af26b1eb5f434d636de6c851.png"},
     {n:"실링팬", r:"원활한 공기 소통은 재물과 복이 집안 곳곳으로 퍼지게 합니다.", u:"https://link.coupang.com/a/dyKFkf", i:"https://thumbnail1.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/12/08/14/9/0a67a9dc-ecaf-4a9a-971d-51296bc5040c.jpg"},
-    {n:"우드 수납장", r:"정리 정돈을 통해 흐트러진 운기를 바로잡고 안정감을 찾으세요.", u:"https://ozip.me/4ARjVhI?af", i:"https://prs.ohousecdn.com/apne2/any/uploads/productions/v1-393417029013504.jpg?w=1280&h=1280&c=c"},
+    {n:"우드 수납장", r:"정리 정돈을 통해 흐트러진 운기를 바로잡고 안정감을 찾으세요.", u:"https://ozip.me/4ARjVhI?af", i:"https://prs.ohou.se/apne2/any/uploads/productions/v1-393417029013504.jpg?w=1280&h=1280&c=c"},
     {n:"홈사우나", r:"따뜻한 기운으로 정체된 혈을 뚫고 복이 들어오는 체질로 바꾸세요.", u:"https://link.coupang.com/a/dyKSYq", i:"https://thumbnail5.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/4f94/6c6381ff9643ca814ef14cd915e80d1e36b905111da517b18dc7930d9795.jpg"}
 ];
 const H_TEXTS = [
@@ -57,8 +38,126 @@ const H_TEXTS = [
     "🏔️ <b>오늘의 염소자리 분석</b><br>책임감 있는 모습으로 주변의 신뢰를 한 몸에 받는 날입니다. 당신의 커리어가 상승합니다.<br>장기적인 목표를 세우기에 아주 좋은 날이니 1년 뒤의 자신의 모습을 구체적으로 그려보세요.<br>금전적으로는 성실함의 대가로 보너스나 작은 선물을 받게 될 기분 좋은 소식이 있습니다.<br>가족과의 따뜻한 대화는 당신에게 가장 큰 힘이 되니 오늘만큼은 일찍 귀가해 보세요.<br>🏠 <b>풍수 조언</b>: 거실에 가족사진을 두어 집안의 화목함과 안정의 기운을 단단하게 다지세요."
 ];
 
-// Functions for page features
-// Exposed to global window object to be accessible by inline `on...` attributes
+
+// --- Classes for Calculators ---
+
+class AverageWeightCalculator {
+    constructor() {
+        this.genderSelect = document.getElementById('gender');
+        this.ageSelect = document.getElementById('age');
+        this.heightInput = document.getElementById('h');
+        this.msgEl = document.getElementById('msg');
+        this.stdEl = document.getElementById('std');
+        this.beautyEl = document.getElementById('beauty');
+
+        this.debouncedCalc = debounce(this.calculate.bind(this), 500);
+        this.initEventListeners();
+    }
+
+    initEventListeners() {
+        this.genderSelect.addEventListener('change', this.calculate.bind(this));
+        this.ageSelect.addEventListener('change', this.calculate.bind(this));
+        this.heightInput.addEventListener('input', this.debouncedCalc);
+    }
+
+    calculate() {
+        const g = this.genderSelect.value;
+        const a = this.ageSelect.value;
+        const h = parseFloat(this.heightInput.value);
+
+        if (h > 50 && h < 300) { // Basic validation
+            const avg = AVG_HEIGHT_DATA[g][a];
+            const diff = (h - avg).toFixed(1);
+            this.msgEl.innerHTML = `평균 키: <b>${avg}cm</b> (${diff >= 0 ? diff + 'cm 큼' : Math.abs(diff) + 'cm 작음'})`;
+            this.stdEl.innerText = (Math.pow(h / 100, 2) * 22).toFixed(1) + "kg";
+            this.beautyEl.innerText = (Math.pow(h / 100, 2) * 19).toFixed(1) + "kg";
+            this.animateResult(this.msgEl);
+            this.animateResult(this.stdEl);
+            this.animateResult(this.beautyEl);
+        } else {
+            this.reset();
+        }
+    }
+    
+    animateResult(element) {
+        element.classList.remove('fade-in');
+        void element.offsetWidth; // Trigger reflow
+        element.classList.add('fade-in');
+    }
+
+    reset() {
+        this.msgEl.innerText = '키를 입력해 주세요.';
+        this.stdEl.innerText = "-";
+        this.beautyEl.innerText = "-";
+    }
+}
+
+class BmiCalculator {
+    constructor() {
+        this.heightInput = document.getElementById('bh');
+        this.weightInput = document.getElementById('bw');
+        this.resultEl = document.getElementById('br');
+        this.categoryEl = document.getElementById('bmi-category');
+        this.boxEl = document.getElementById('bmi-result-box');
+
+        this.debouncedCalc = debounce(this.calculate.bind(this), 500);
+        this.initEventListeners();
+    }
+
+    initEventListeners() {
+        this.heightInput.addEventListener('input', this.debouncedCalc);
+        this.weightInput.addEventListener('input', this.debouncedCalc);
+    }
+
+    calculate() {
+        const h = parseFloat(this.heightInput.value) / 100;
+        const w = parseFloat(this.weightInput.value);
+
+        this.boxEl.className = 'res-box'; // Reset class
+
+        if (h > 0.5 && h < 3 && w > 10 && w < 500) { // Basic validation
+            const bmiVal = w / (h * h);
+            this.resultEl.innerText = bmiVal.toFixed(1);
+
+            let category = '';
+            let categoryClass = '';
+
+            if (bmiVal < 18.5) {
+                category = '저체중';
+                categoryClass = 'underweight';
+            } else if (bmiVal < 23) {
+                category = '정상';
+                categoryClass = 'normal';
+            } else if (bmiVal < 25) {
+                category = '과체중';
+                categoryClass = 'overweight';
+            } else {
+                category = '비만';
+                categoryClass = 'obese';
+            }
+            this.categoryEl.innerText = category;
+            this.boxEl.classList.add(categoryClass);
+            this.animateResult(this.boxEl);
+        } else {
+            this.reset();
+        }
+    }
+    
+    animateResult(element) {
+        element.classList.remove('fade-in');
+        void element.offsetWidth; // Trigger reflow
+        element.classList.add('fade-in');
+    }
+
+    reset() {
+        this.resultEl.innerText = "0.0";
+        this.categoryEl.innerText = "";
+    }
+}
+
+
+// --- Global Functions and Event Listeners ---
+
 async function initCounter() {
     const ns = "borareview_v_final_layout";
     const kst = new Intl.DateTimeFormat('ko-KR', {timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date()).replace(/\. /g, '').replace(/\./g, '');
@@ -71,66 +170,6 @@ async function initCounter() {
     }
 }
 window.initCounter = initCounter;
-
-function calc() {
-    const g = document.getElementById('gender').value;
-    const a = document.getElementById('age').value;
-    const h = parseFloat(document.getElementById('h').value);
-
-    if(h > 0 && h < 300) { // Basic validation
-        const avg = AVG_HEIGHT_DATA[g][a];
-        const diff = (h-avg).toFixed(1);
-        document.getElementById('msg').innerHTML = `평균 키: <b>${avg}cm</b> (${diff>=0 ? diff+'cm 큼' : Math.abs(diff)+'cm 작음'})`;
-        document.getElementById('std').innerText = (Math.pow(h/100,2)*22).toFixed(1)+"kg";
-        document.getElementById('beauty').innerText = (Math.pow(h/100,2)*19).toFixed(1)+"kg";
-    } else {
-        // Reset if input is invalid or empty
-        document.getElementById('msg').innerText = '키를 입력해 주세요.';
-        document.getElementById('std').innerText = "-";
-        document.getElementById('beauty').innerText = "-";
-    }
-}
-window.calc = calc;
-
-function bmi() {
-    const h = parseFloat(document.getElementById('bh').value) / 100;
-    const w = parseFloat(document.getElementById('bw').value);
-    const brElem = document.getElementById('br');
-    const catElem = document.getElementById('bmi-category');
-    const boxElem = document.getElementById('bmi-result-box');
-
-    boxElem.className = 'res-box'; // Reset class
-
-    if(h > 0 && w > 0 && h < 3 && w < 500) { // Basic validation
-        const bmiVal = w / (h * h);
-        brElem.innerText = bmiVal.toFixed(1);
-
-        let category = '';
-        let categoryClass = '';
-
-        if (bmiVal < 18.5) {
-            category = '저체중';
-            categoryClass = 'underweight';
-        } else if (bmiVal < 23) {
-            category = '정상';
-            categoryClass = 'normal';
-        } else if (bmiVal < 25) {
-            category = '과체중';
-            categoryClass = 'overweight';
-        } else {
-            category = '비만';
-            categoryClass = 'obese';
-        }
-        catElem.innerText = category;
-        boxElem.classList.add(categoryClass);
-
-    } else {
-        // Reset if inputs are invalid or empty
-        brElem.innerText = "0.0";
-        catElem.innerText = "";
-    }
-}
-window.bmi = bmi;
 
 function show() {
     const s = document.getElementById('z').value;
@@ -149,6 +188,24 @@ function show() {
 }
 window.show = show;
 
-// Create and expose debounced functions for inline event handlers
-window.debouncedCalc = debounce(calc, 500);
-window.debouncedBmi = debounce(bmi, 500);
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize calculators
+    new AverageWeightCalculator();
+    new BmiCalculator();
+
+    // Intersection Observer for other animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationDelay = `${index * 150}ms`;
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.link-item, .horo-card').forEach(card => {
+        observer.observe(card);
+    });
+});
