@@ -3,365 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Body Shape Analysis</title>
+    <meta name="referrer" content="no-referrer">
     
-    <!-- 구글 애드센스 -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3735666512605515" crossorigin="anonymous"></script>
+    <title>뷰스타 쪼 - borareview</title>
+    <meta property="og:title" content="뷰스타 쪼 - borareview">
+    <meta property="og:description" content="(당신을 위한 최저가 큐레이션)">
+    <meta property="og:image" content="https://postfiles.pstatic.net/MjAyNjAxMjVfNzAg/MDAxNzY5MjY5MDg4MDY2.VBM1QAwp9KKEt0y1PjbJ0wMOFSIVHeiQHUlS8I0Ds6Ag.TAU0SGw-nb3FsChQIif-nAj67EcZKhXs5aL1Xi2ey3Yg.JPEG/Gemini_Generated_Image_xemzatxemzatxemz.jpg?type=w966">
+    <meta property="og:url" content="https://zzo-building3.pages.dev/?v=final_layout_fix">
+    <meta property="og:type" content="website">
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.5/dist/teachablemachine-image.min.js"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
     <style>
-        :root { --primary-pink: #f43f5e; --sub-gray: #6b7280; --bg-light: #f9fafb; --trust-green: #059669; }
-        body { 
-            font-family: 'Pretendard', sans-serif; 
-            background-color: var(--bg-light); 
-            color: #1f2937; 
-            margin: 0; 
-            padding: 0;
-            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
-        }
-        img { -webkit-user-drag: none; pointer-events: none; }
-        
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background: white; border-bottom: 1px solid #eee; }
-        .nav-logo { font-size: 18px; font-weight: bold; color: var(--primary-pink); text-decoration: none; }
-        
-        .nav-right { display: flex; align-items: center; gap: 15px; }
-        .nav-link { font-size: 13px; color: #4b5563; text-decoration: none; cursor: pointer; font-weight: 500; }
+        :root { --bg-color: #95a391; --card-bg: #fdfbf9; --point-pink: #d63384; --gold-bg: #fff9e6; --nice-green: #2e7d32; }
+        body { margin: 0; padding: 0; background-color: var(--bg-color); font-family: 'Noto Sans KR', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .main-container { width: 92%; max-width: 450px; display: flex; flex-direction: column; gap: 20px; padding: 30px 0 50px; }
+        .section-card { background: var(--card-bg); border-radius: 28px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); box-sizing: border-box; }
+        .section-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 18px; text-align: center; color: #333; }
+        .input-group { display: flex; gap: 8px; margin-bottom: 10px; }
+        select, input { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid #eee; font-size: 0.9rem; outline: none; background: white; font-family: inherit; }
+        .res-container { display: flex; gap: 10px; margin-top: 15px; }
+        .res-box { flex: 1; background: #f1f3f9; border-radius: 15px; padding: 12px; text-align: center; }
+        .res-box.active { background: #fff0f6; }
+        .res-box b { font-size: 1.4rem; font-weight: 700; display: block; color: #333; }
+        .res-box.active b { color: var(--point-pink); }
+        .avg-msg { font-size: 0.82rem; text-align: center; margin-top: 10px; color: var(--nice-green); font-weight: 500; }
+        .link-group { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+        .link-item { display: flex; align-items: center; background: white; border-radius: 22px; padding: 12px 15px; text-decoration: none; color: inherit; border: 1px solid #f0f0f0; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .link-thumb { width: 52px; height: 52px; border-radius: 12px; object-fit: cover; margin-right: 15px; }
+        .link-text { font-size: 1rem; font-weight: 500; flex-grow: 1; line-height: 1.4; color: #2c2c2c; }
+        .effect-img { width: 45px; height: 35px; border-radius: 6px; object-fit: cover; margin-left: 10px; border: 1px solid #eee; }
+        .go-btn { width: 32px; height: 32px; background: var(--point-pink); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin-left: 10px; flex-shrink: 0; }
+        .horo-card { background: var(--gold-bg); border-radius: 28px; padding: 22px; }
+        .horo-result { background: white; border-radius: 18px; padding: 18px; font-size: 0.85rem; line-height: 1.8; color: #444; display: none; margin-top: 15px; border: 1px dashed #ffeeba; }
+        .lucky-card { margin-top: 15px; padding: 12px; background: #fff0f6; border-radius: 20px; display: flex; align-items: center; text-decoration: none; border: 1px solid #ffdeeb; }
+        .lucky-card img { width: 55px; height: 55px; border-radius: 12px; margin-right: 15px; object-fit: cover; }
+        footer { text-align: center; padding-bottom: 40px; color: white; }
+        .counter { background: rgba(0,0,0,0.12); padding: 8px 22px; border-radius: 25px; display: inline-flex; gap: 15px; font-size: 0.75rem; border: 1px solid rgba(255,255,255,0.2); }
 
-        .lang-switch {
-            display: flex; gap: 2px; background: #f3f4f6; padding: 3px; border-radius: 20px; font-size: 11px; font-weight: bold; cursor: pointer;
-        }
-        .lang-btn { padding: 4px 10px; border-radius: 15px; color: #9ca3af; transition: 0.3s; }
-        .lang-btn.active { background: white; color: var(--primary-pink); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-
-        .container { max-width: 600px; margin: 20px auto; background: white; border-radius: 30px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; min-height: 600px; }
-        .header h1 { font-size: 32px; color: var(--primary-pink); margin: 20px 0 10px; }
-        .header p { color: var(--sub-gray); font-size: 15px; margin-bottom: 20px; line-height: 1.5; }
-        
-        .trust-badge-container { display: inline-flex; justify-content: center; gap: 20px; margin-bottom: 25px; padding: 12px 25px; background: #f0fdf4; border: 1.5px solid #dcfce7; border-radius: 50px; }
-        .trust-badge { font-size: 14px; color: var(--trust-green); font-weight: 700; display: flex; align-items: center; gap: 6px; }
-
-        .gender-group { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
-        .gender-btn { padding: 12px 30px; border: 1px solid #ddd; border-radius: 20px; background: white; cursor: pointer; transition: 0.3s; font-weight: 600; }
-        .gender-btn.active { background: var(--primary-pink); color: white; border-color: var(--primary-pink); }
-        
-        .guide-notice { background: #fff1f2; color: #e11d48; padding: 12px; border-radius: 12px; font-size: 13px; margin-bottom: 20px; line-height: 1.4; border: 1px solid #fecdd3; }
-        .upload-area { border: 2px dashed #d1d5db; border-radius: 20px; padding: 50px 20px; cursor: pointer; transition: 0.3s; background: #fff; }
-        .upload-area:hover { border-color: var(--primary-pink); background: #fff1f2; }
-        .upload-icon { width: 64px; height: 64px; background: linear-gradient(135deg, #a855f7, #ec4899); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: white; font-size: 32px; }
-        .loading-spinner { width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #ec4899; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .btn { display: block; width: 100%; padding: 18px; margin: 12px 0; border: 1px solid #e5e7eb; border-radius: 15px; background: white; font-size: 16px; cursor: pointer; transition: 0.2s; color: #374151; font-weight: 600; }
-        .btn:hover { border-color: var(--primary-pink); color: var(--primary-pink); }
-        
-        #res-title { font-size: 28px; color: var(--primary-pink); margin-bottom: 25px; font-weight: 800; line-height: 1.3; }
-        #res-body { text-align: left; background: #fff5f7; padding: 30px; border-radius: 20px; line-height: 1.9; font-size: 18px; word-break: keep-all; }
-        .action-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        
-        #toast { position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 12px 25px; border-radius: 30px; font-size: 14px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 1000; }
-        #toast.show { opacity: 1; }
-
-        footer { margin-top: 50px; padding: 20px; font-size: 12px; color: #9ca3af; text-align: center; }
-        .hidden { display: none; }
+        /* [수정] 헤더 레이아웃 */
+        .top-container { text-align: center; padding: 25px 0 10px; width: 100%; color: white; }
+        .header-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 2px; }
+        .profile-wrapper { width: 60px; height: 60px; overflow: hidden; border-radius: 10px; }
+        .profile-img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
-<body>
+<body onload="initCounter()">
 
-<nav>
-    <a href="#" class="nav-logo" id="nav-title">👙 체형 진단 테스트</a>
-    <div class="nav-right">
-        <div class="nav-link" id="nav-info" onclick="showInfo()">체형진단이란?</div>
-        <div class="lang-switch" onclick="toggleLang()">
-            <span class="lang-btn active" id="btn-ko">한국어</span>
-            <span class="lang-btn" id="btn-en">English</span>
+    <div class="top-container">
+        <div class="header-row">
+            <div class="profile-wrapper">
+                <img src="https://postfiles.pstatic.net/MjAyNjAxMjRfMTE0/MDAxNzY5MjQ0NDAxODMx.QE_iJJ5LDRSIDG_IHVTjscO4snVOnI3KQkwPNBPYwRsg.6exmzGFkzSll2M493cCnyUrrVCmn143_q9UC4PFxAqcg.JPEG/IMG_9797.jpg?type=w966" class="profile-img">
+            </div>
+            <h1 style="margin:0; font-size:1.6rem;">뷰스타 쪼</h1>
         </div>
-    </div>
-</nav>
-
-<div class="container">
-    <div id="view-upload">
-        <div class="header">
-            <h1 id="main-title">골격 체형 테스트</h1>
-            <p id="main-desc">나의 실루엣을 인공지능이 정밀 분석합니다.<br>장점을 극대화하는 인생 코디를 찾아보세요!</p>
-        </div>
-
-        <div class="trust-badge-container">
-            <div class="trust-badge" id="badge-free">✅ 평생 무료 서비스</div>
-            <div class="trust-badge" id="badge-secure">🔒 사진 미저장 보장</div>
-        </div>
-
-        <div class="gender-group">
-            <button id="btn-female" class="gender-btn active" onclick="setGender('female')">👩 여성</button>
-            <button id="btn-male" class="gender-btn" onclick="setGender('male')">👨 남성</button>
-        </div>
-
-        <div class="guide-notice" id="guide-box">
-            💡 <strong>정확한 진단을 위한 팁</strong><br>
-            몸의 외곽 라인이 잘 보이는 옷을 입고 촬영하면 판독 정확도가 올라갑니다!
-        </div>
-
-        <div class="upload-area" onclick="document.getElementById('img-input').click()">
-            <div class="upload-icon">📷</div>
-            <p style="font-weight: bold; margin-bottom: 5px;" id="upload-main">전신 사진을 선택하세요!</p>
-            <span style="font-size: 12px; color: #9ca3af;" id="upload-sub">사진을 올리면 자동으로 판독이 시작됩니다</span>
-            <input type="file" id="img-input" class="hidden" accept="image/*" onchange="processAI(this)">
+        <p style="margin:5px 0; font-size:0.85rem; opacity:0.9;">(당신을 위한 최저가 큐레이션)</p>
+        <div style="display:flex; justify-content:center; gap:10px; margin-top:10px;">
+            <a href="https://blog.naver.com/borareview" target="_blank" style="width:28px;height:28px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;justify-content:center;align-items:center;color:white;text-decoration:none;font-size:0.75rem;border:1px solid rgba(255,255,255,0.3);">N</a>
+            <a href="https://www.instagram.com/zzoreviewbox/" target="_blank" style="width:28px;height:28px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;justify-content:center;align-items:center;color:white;text-decoration:none;border:1px solid rgba(255,255,255,0.3);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
         </div>
     </div>
 
-    <div id="view-loading" class="hidden">
-        <div style="padding: 60px 0;">
-            <div class="loading-spinner"></div>
-            <h3 style="color: var(--primary-pink);" id="loading-title">사진을 판독 중입니다...</h3>
-            <p style="color: #6b7280;" id="loading-desc">잠시만 기다려주세요!</p>
+    <div class="main-container">
+        <div class="section-card">
+            <div class="section-title">📈 평균 키 & 미용 몸무게 분석</div>
+            <div class="input-group">
+                <select id="gender" onchange="calc()"><option value="female">여성</option><option value="male">남성</option></select>
+                <select id="age" onchange="calc()"><option value="20">20대</option><option value="30">30대</option><option value="40">40대</option><option value="50">50대+</option></select>
+            </div>
+            <input type="number" id="h" placeholder="당신의 키(cm) 입력" oninput="calc()">
+            <div id="msg" class="avg-msg">키를 입력해 주세요.</div>
+            <div class="res-container">
+                <div class="res-box"><span>표준 체중</span><b id="std">-</b></div>
+                <div class="res-box active"><span>미용 체중</span><b id="beauty">-</b></div>
+            </div>
+        </div>
+
+        <div class="link-group">
+            <a href="https://link.coupang.com/a/dyHzTw" target="_blank" class="link-item">
+                <img src="https://m.blick.kr/web/product/extra/big/202411/db8e8a474be44f7e8c56419b7be6326f.png" class="link-thumb"><span class="link-text">대기업 보다 좋아서 쓰는 빔프로젝터</span>
+                <img src="https://postfiles.pstatic.net/MjAyNTA0MThfMTQg/MDAxNzQ0OTgxMDg0MDQ1.8lZw6vQg_UqZxQSjSqjI_50KhLbZzphSgu5FqZNmtCQg.yakdX1BU2kRR5xOVNhKx9vFx4LR-mNzv6kfvSQsc6cQg.JPEG/%EB%B9%94%ED%94%84%EB%A1%9C%EC%A0%9D%ED%84%B0.jpg?type=w966" class="effect-img">
+            </a>
+            <a href="https://link.coupang.com/a/dyLnqT" target="_blank" class="link-item">
+                <img src="https://cafe24img.poxo.com/manfidence/web/product/big/202409/06713d5e39ff4671b9e216177fccba20.jpg" class="link-thumb"><span class="link-text">서현의 몸매 비결? 빨간통 다이어트</span>
+            </a>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title">📊 BMI 지수 계산기</div>
+            <div class="input-group"><input type="number" id="bh" placeholder="키(cm)" oninput="bmi()"><input type="number" id="bw" placeholder="몸무게(kg)" oninput="bmi()"></div>
+            <div class="res-box" style="margin-top:10px;">BMI 지수: <b id="br">0.0</b></div>
+        </div>
+
+        <div class="link-group">
+            <a href="https://link.coupang.com/a/dqIJZb" target="_blank" class="link-item">
+                <img src="https://sitem.ssgcdn.com/01/83/31/item/1000433318301_i1_1200.jpg" class="link-thumb"><span class="link-text">효과 본 김남주 맥주 효모 핫딜</span>
+                <img src="https://postfiles.pstatic.net/MjAyNjAxMTNfNTIg/MDAxNzY4Mjk1NDI0NjAw.xR3WsmIqgkThSc0iAkxkA96EEVkDnA8avuOployLkzgg.E0-tmA4SPbTx_e6fkayYipe2myfRTDEdpiyLIP-FIR4g.JPEG/1.jpg?type=w966" class="effect-img">
+            </a>
+            <a href="https://kr.iherb.com/pr/now-foods-brewer-s-yeast-650-mg-200-tablets/48771?rcode=FEG9985" target="_blank" class="link-item">
+                <img src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now02410/v/68.jpg" class="link-thumb"><span class="link-text">"가성비" 아이허브 맥주효모 1만원 대</span>
+            </a>
+        </div>
+
+        <div class="horo-card">
+            <div class="section-title" style="color:#856404;">🔮 별자리 운세 & 행운 아이템</div>
+            <select id="z" onchange="show()" style="width:100%; border:1px solid #eee;"><option value="">별자리를 선택하세요</option><option value="1">물병자리 (1.20~2.18)</option><option value="2">물고기자리 (2.19~3.20)</option><option value="3">양자리 (3.21~4.19)</option><option value="4">황소자리 (4.20~5.20)</option><option value="5">쌍둥이자리 (5.21~6.21)</option><option value="6">게자리 (6.22~7.22)</option><option value="7">사자자리 (7.23~8.22)</option><option value="8">처녀자리 (8.23~9.23)</option><option value="9">천칭자리 (9.24~10.22)</option><option value="10">전갈자리 (10.23~11.22)</option><option value="11">사수자리 (11.23~12.24)</option><option value="12">염소자리 (12.25~1.19)</option></select>
+            <div id="ht" class="horo-result"></div>
+            <div id="la"></div>
+        </div>
+
+        <div class="link-group">
+            <a href="https://link.coupang.com/a/dyGXsN" target="_blank" class="link-item">
+                <img src="https://cdn.imweb.me/thumbnail/20251212/cb85cec76f249.jpg" class="link-thumb"><span class="link-text">집에서 하는 천국의 계단? 칼로리 순삭!</span>
+            </a>
+            <a href="https://naver.me/5cqnj2Vn" target="_blank" class="link-item">
+                <img src="https://sitem.ssgcdn.com/11/80/03/item/1000588038011_i1_750.jpg" class="link-thumb"><span class="link-text">평점 4.8 리얼 후기 가성비 러닝머신</span>
+            </a>
+            <a href="https://oy.run/4qG1a95" target="_blank" class="link-item">
+                <img src="https://postfiles.pstatic.net/MjAyNjAxMTJfNDIg/MDAxNzY4MTg3ODkwMjk4.5UAsq8Ytcukl1x-VqXJpZevIlqGlmPI5c8oD9M7eEi4g.zLDZALH89ApqENzxEeXkuAEdIgr3rbS40dzqGlveq_og.PNG/6.png?type=w966" class="link-thumb"><span class="link-text">야노시호 마시는 샐러드 최저가</span>
+            </a>
         </div>
     </div>
 
-    <div id="view-survey" class="hidden">
-        <h3 id="q-text" style="margin-bottom: 25px; line-height: 1.4; font-size: 20px;"></h3>
-        <div id="q-options"></div>
-    </div>
+    <footer>
+        <div class="counter">Today: <b id="ct">...</b> &nbsp; | &nbsp; Total: <b id="tt">...</b></div>
+        <p style="font-size:0.65rem; opacity:0.7; margin-top:15px; padding:0 30px;">*위 링크로 구매시 크리에이터에게 소정의 수수료가 지급될 수 있습니다.</p>
+    </footer>
 
-    <div id="view-result" class="hidden">
-        <div id="capture-area">
-            <h2 id="res-title"></h2>
-            <div id="res-body"></div>
-        </div>
-        <div class="action-group">
-            <button class="btn" onclick="downloadResult()" style="border-color: #a855f7; color: #a855f7;" id="btn-save">💾 결과 저장</button>
-            <button class="btn" onclick="openShareMenu()" style="border-color: #ec4899; color: #ec4899;" id="btn-share">📤 공유하기</button>
-        </div>
-        <button class="btn" style="margin-top: 10px; background: #374151; color: white; border: none;" onclick="location.reload()" id="btn-retry">다시 테스트하기</button>
-    </div>
-</div>
-
-<div id="toast">링크가 복사되었습니다!</div>
-
-<footer>© 2026 뷰스타 쪼. All rights reserved.</footer>
-
-<script>
-    let currentLang = 'ko';
-    
-    const TEXTS = {
-        ko: {
-            nav: "👙 체형 진단 테스트",
-            navInfo: "체형진단이란?",
-            infoMsg: "골격 진단은 타고난 신체 특징을 분석해 가장 돋보이는 스타일을 제안하는 시스템입니다.",
-            title: "골격 체형 테스트",
-            desc: "나의 실루엣을 인공지능이 정밀 분석합니다.<br>장점을 극대화하는 인생 코디를 찾아보세요!",
-            badgeFree: "✅ 평생 무료 서비스",
-            badgeSecure: "🔒 사진 미저장 보장",
-            genderF: "👩 여성",
-            genderM: "👨 남성",
-            guide: "💡 <strong>정확한 진단을 위한 팁</strong><br>몸의 외곽 라인이 잘 보이는 옷을 입고 촬영하면 판독 정확도가 올라갑니다!",
-            upMain: "전신 사진을 선택하세요!",
-            upSub: "사진을 올리면 자동으로 판독이 시작됩니다",
-            loadTitle: "사진을 판독 중입니다...",
-            loadDesc: "잠시만 기다려주세요!",
-            btnSave: "💾 결과 저장",
-            btnShare: "📤 공유하기",
-            btnRetry: "다시 테스트하기",
-            toast: "링크가 복사되었습니다!",
-            shareTitle: "AI 골격 체형 진단",
-            qBank: [
-                { q: "목의 길이는 어떤가요?", a: "비교적 짧고 어깨선이 직선적임", b: "가늘고 긴 편임", c: "길고 뼈대가 뚜렷함" },
-                { q: "쇄골 모양은 어떤가요?", a: "거의 보이지 않음", b: "가늘게 존재감이 있음", c: "굵고 도드라짐" },
-                { q: "손의 특징은?", a: "손바닥에 살집이 있고 작음", b: "손가락이 가늘고 긴 편", c: "마디가 굵고 손 자체가 큼" },
-                { q: "허리 라인의 위치는?", a: "높고 굴곡이 적음", b: "낮고 선이 가늘음", c: "골격 프레임이 큼" },
-                { q: "무릎 뼈의 특징은?", a: "작고 잘 보이지 않음", b: "둥글고 적당함", c: "크고 튀어나와 보임" },
-                { q: "어울리는 상의 핏은?", a: "깔끔한 정사이즈", b: "화려한 디테일", c: "여유로운 루즈핏" },
-                { q: "살이 붙는 부위는?", a: "상체와 배 주변", b: "하체와 엉덩이", c: "전체적으로 골격이 커짐" },
-                { q: "피부의 탄력감은?", a: "탱탱하고 탄력 있음", b: "부드럽고 푹신함", c: "가죽이 두꺼운 느낌" },
-                { q: "액세서리 취향은?", a: "심플하고 고급짐", b: "작고 반짝임", c: "볼드하고 자연스러움" },
-                { q: "나의 베스트 소재는?", a: "빳빳한 면/실크", b: "쉬폰/니트", c: "린넨/데님" }
-            ],
-            res: {
-                S: { fTitle: "✨ 스트레이트 체형", mTitle: "👔 스트레이트 체형", 
-                     fDesc: "<strong>당신은 존재만으로도 건강한 에너지를 발산하는 '자기관리의 아이콘' 스타일입니다!</strong><br>몸 전체에 입체감이 살아있어 탄탄하고 탄력 있는 실루엣을 자랑합니다. 상하체 비율이 균형 잡혀 있어 기본 티셔츠와 데님만으로도 명품 핏을 완성합니다. 심플하고 클래식한 스타일이 당신의 고급스러움을 극대화합니다.<br><br><strong>🧥 추천:</strong> V넥 상의, 정사이즈 셔츠, 일자핏 슬랙스", 
-                     mDesc: "<strong>당신은 신뢰감을 주는 '완벽한 피지컬'의 소유자입니다!</strong><br>가슴 두께감이 있고 근육이 잘 붙어 클래식한 수트 핏이 가장 잘 어울립니다. 상체에 무게 중심이 있어 듬직하고 에너제틱해 보이며, 깃이 선 셔츠나 깔끔한 니트로 중후한 멋을 낼 수 있습니다.<br><br><strong>🧥 추천:</strong> 깃이 선 셔츠, 정사이즈 수트, 가죽 로퍼" },
-                N: { fTitle: "🌸 웨이브 체형", mTitle: "💎 웨이브 체형",
-                     fDesc: "<strong>당신은 보호 본능을 자극하는 '청순하고 우아한' 스타일입니다!</strong><br>가늘고 부드러운 곡선 실루엣으로 여성스러운 분위기를 가장 잘 소화합니다. 가녀린 상체와 쇄골 라인이 독보적인 장점이며, 하이웨이스트나 A라인 스커트로 다리를 길어 보이게 연출하면 완벽합니다.<br><br><strong>🧥 추천:</strong> 하이웨이스트, 퍼프 블라우스, A라인 스커트", 
-                     mDesc: "<strong>당신은 어떤 옷이든 감각적으로 소화하는 '섬세한 패셔니스타'입니다!</strong><br>상체 선이 가늘고 유연해 레이어드나 패턴 룩을 아주 스타일리시하게 소화합니다. 부드러운 인상을 주며, 포켓 셔츠나 니트로 상체에 볼륨을 더하면 완벽한 밸런스를 맞출 수 있습니다.<br><br><strong>🧥 추천:</strong> 포켓 셔츠, 세미 하이웨이스트 슬랙스, 부드러운 니트" },
-                C: { fTitle: "🕶 내추럴 체형", mTitle: "🧥 내추럴 체형",
-                     fDesc: "<strong>당신은 런웨이처럼 만드는 '독보적인 프레임'의 모델 스타일입니다!</strong><br>시원시원한 골격과 딱 잡힌 어깨 라인은 패셔니스타의 징표입니다. 박시하고 루즈한 핏도 시크한 화보처럼 소화하며, 린넨이나 데님 같은 거친 소재가 당신을 더욱 고급스럽게 만듭니다.<br><br><strong>🧥 추천:</strong> 와이드 팬츠, 오버핏 셔츠, 맥시 원피스", 
-                     mDesc: "<strong>당신은 '옷발'이 가장 잘 받는 부러운 모델 체형입니다!</strong><br>타고난 뼈대가 멋스러워 남들은 소화하기 힘든 루즈핏이나 와이드 팬츠를 가장 시크하게 소화합니다. 무심하게 툭 걸친 오버사이즈 코트 한 장만으로도 압도적인 실루엣을 연출할 수 있습니다.<br><br><strong>🧥 추천:</strong> 오버사이즈 코트, 와이드 데님 팬츠, 볼드한 시계" }
-            }
-        },
-        en: {
-            nav: "Body Shape Analysis",
-            navInfo: "What is this?",
-            infoMsg: "Body Shape Analysis system analyzes your natural physical features to suggest the most flattering styles.",
-            title: "AI Body Shape Test",
-            desc: "AI analyzes your silhouette precisely.<br>Find the best style that maximizes your charm!",
-            badgeFree: "✅ Free Forever",
-            badgeSecure: "🔒 No Photo Storage",
-            genderF: "👩 Female",
-            genderM: "👨 Male",
-            guide: "💡 <strong>Tip for Accuracy</strong><br>Wear clothes that show your body outline clearly for better results!",
-            upMain: "Select a Full-body Photo!",
-            upSub: "Analysis starts automatically upon upload",
-            loadTitle: "Analyzing your photo...",
-            loadDesc: "Please wait a moment!",
-            btnSave: "💾 Save Result",
-            btnShare: "📤 Share",
-            btnRetry: "Test Again",
-            toast: "Link copied to clipboard!",
-            shareTitle: "AI Body Shape Analysis",
-            qBank: [
-                { q: "How is your neck length?", a: "Relatively short, straight shoulders", b: "Thin and long", c: "Long with prominent bones" },
-                { q: "How are your collarbones?", a: "Barely visible", b: "Thin but visible", c: "Thick and prominent" },
-                { q: "Hand characteristics?", a: "Small with fleshy palms", b: "Thin and long fingers", c: "Large hands with thick joints" },
-                { q: "Waistline position?", a: "High, less defined curve", b: "Low, thin curve", c: "Large skeletal frame" },
-                { q: "Knee bone features?", a: "Small, not very visible", b: "Round and moderate", c: "Large and protruding" },
-                { q: "Best top fit?", a: "Clean standard fit", b: "Fancy details (ruffles, pockets)", c: "Relaxed loose fit" },
-                { q: "Where do you gain weight?", a: "Upper body and stomach", b: "Lower body and hips", c: "Frame gets larger overall" },
-                { q: "Skin texture?", a: "Firm and elastic", b: "Soft and fluffy", c: "Thick and leathery feel" },
-                { q: "Accessory preference?", a: "Simple and high-quality", b: "Small and shiny", c: "Bold and natural" },
-                { q: "Best fabric for you?", a: "Stiff cotton/silk", b: "Chiffon/Soft knit", c: "Linen/Denim" }
-            ],
-            res: {
-                S: { fTitle: "✨ Straight Type", mTitle: "👔 Straight Type", 
-                     fDesc: "<strong>You are the icon of 'self-management' with healthy energy!</strong><br>Your body has volume and elasticity, giving you a fit look without much effort. With a balanced upper and lower body, you look luxurious even in a simple T-shirt and jeans. Simple and classic styles highlight your value the most.<br><br><strong>🧥 Best Pick:</strong> V-neck tops, Standard shirts, Straight slacks", 
-                     mDesc: "<strong>You have the 'perfect physique' that gives a sense of trust!</strong><br>With a thick chest and well-attached muscles, you look best in classic suits. Your center of gravity is in the upper body, giving a reliable and energetic impression. Crisp shirts look amazing on you.<br><br><strong>🧥 Best Pick:</strong> Collared shirts, Classic suits, Loafers" },
-                N: { fTitle: "🌸 Wave Type", mTitle: "💎 Wave Type",
-                     fDesc: "<strong>You have an 'elegant and innocent' style that sparks protective instincts!</strong><br>Your silhouette is made of soft curves, perfect for feminine styles. Your slender upper body and collarbones are unique assets. High-waisted bottoms make your legs look incredibly long.<br><br><strong>🧥 Best Pick:</strong> High-waist, Puff blouses, A-line skirts", 
-                     mDesc: "<strong>You are a 'delicate fashionista' who pulls off any style!</strong><br>With a slender and flexible upper body, you look stylish in layered or patterned looks. Soft knits or shirts with pockets add volume to your upper body, creating a perfect balance.<br><br><strong>🧥 Best Pick:</strong> Pocket shirts, Semi-high waist slacks, Soft knits" },
-                C: { fTitle: "🕶 Natural Type", mTitle: "🧥 Natural Type",
-                     fDesc: "<strong>You have a 'unique frame' that turns any street into a runway!</strong><br>Your wide shoulders and cool skeletal frame are signs of a fashionista. You look chic even in boxy and loose fits. Rough materials like linen or denim transform into a luxurious mood on you.<br><br><strong>🧥 Best Pick:</strong> Wide pants, Overfit shirts, Maxi dresses", 
-                     mDesc: "<strong>You have the 'model body' that looks good in anything!</strong><br>Born with a stylish frame, you pull off loose fits and wide pants more chicly than anyone else. An oversized coat draped casually creates an overwhelming silhouette.<br><br><strong>🧥 Best Pick:</strong> Oversized coats, Wide denim pants, Bold watches" }
+    <script>
+        async function initCounter() {
+            const ns = "borareview_v_final_layout";
+            const kst = new Intl.DateTimeFormat('ko-KR', {timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date()).replace(/\. /g, '').replace(/\./g, '');
+            try {
+                const tR = await fetch(`https://api.counterapi.dev/v1/${ns}/total/up`); const tD = await tR.json(); document.getElementById('tt').innerText = tD.count.toLocaleString();
+                const dR = await fetch(`https://api.counterapi.dev/v1/${ns}/today_${kst}/up`); const dD = await dR.json(); document.getElementById('ct').innerText = dD.count.toLocaleString();
+            } catch(e) { document.getElementById('ct').innerText="1"; document.getElementById('tt').innerText="1,000+"; }
+        }
+        function calc() {
+            const d = { female:{20:161.3,30:161.9,40:160.2,50:157.6}, male:{20:174.4,30:174.9,40:173.2,50:170.5} };
+            const g = document.getElementById('gender').value, a = document.getElementById('age').value, h = parseFloat(document.getElementById('h').value);
+            if(h > 0) {
+                const avg = d[g][a], diff = (h-avg).toFixed(1);
+                document.getElementById('msg').innerHTML = `평균 키: <b>${avg}cm</b> (${diff>=0 ? diff+'cm 큼' : Math.abs(diff)+'cm 작음'})`;
+                document.getElementById('std').innerText = (Math.pow(h/100,2)*22).toFixed(1)+"kg";
+                document.getElementById('beauty').innerText = (Math.pow(h/100,2)*19).toFixed(1)+"kg";
             }
         }
-    };
-
-    function showInfo() {
-        alert(TEXTS[currentLang].infoMsg);
-    }
-
-    function toggleLang() {
-        currentLang = currentLang === 'ko' ? 'en' : 'ko';
-        updateUI();
-        if (!document.getElementById('view-survey').classList.contains('hidden')) initSurvey();
-        if (!document.getElementById('view-result').classList.contains('hidden')) finalize();
-    }
-
-    function updateUI() {
-        const t = TEXTS[currentLang];
-        document.getElementById('btn-ko').classList.toggle('active', currentLang === 'ko');
-        document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
-        document.getElementById('nav-title').innerText = t.nav;
-        document.getElementById('nav-info').innerText = t.navInfo;
-        document.getElementById('main-title').innerText = t.title;
-        document.getElementById('main-desc').innerHTML = t.desc;
-        document.getElementById('badge-free').innerText = t.badgeFree;
-        document.getElementById('badge-secure').innerText = t.badgeSecure;
-        document.getElementById('btn-female').innerText = t.genderF;
-        document.getElementById('btn-male').innerText = t.genderM;
-        document.getElementById('guide-box').innerHTML = t.guide;
-        document.getElementById('upload-main').innerText = t.upMain;
-        document.getElementById('upload-sub').innerText = t.upSub;
-        document.getElementById('loading-title').innerText = t.loadTitle;
-        document.getElementById('loading-desc').innerText = t.loadDesc;
-        document.getElementById('btn-save').innerText = t.btnSave;
-        document.getElementById('btn-share').innerText = t.btnShare;
-        document.getElementById('btn-retry').innerText = t.btnRetry;
-        document.getElementById('toast').innerText = t.toast;
-    }
-
-    const MODEL_URL = "https://teachablemachine.withgoogle.com/models/Y9Y9vIofD/"; 
-    let model, aiData = { S: 0, N: 0, C: 0 }, surveyData = { S: 0, N: 0, C: 0 };
-    let currentGender = 'female';
-    let winnerKey = 'S';
-
-    function setGender(g) {
-        currentGender = g;
-        document.getElementById('btn-female').classList.toggle('active', g === 'female');
-        document.getElementById('btn-male').classList.toggle('active', g === 'male');
-    }
-
-    async function loadTM() { try { model = await tmImage.load(MODEL_URL + "model.json", MODEL_URL + "metadata.json"); } catch(e) {} }
-    loadTM();
-
-    async function processAI(input) {
-        if (!input.files[0]) return;
-        document.getElementById('view-upload').classList.add('hidden');
-        document.getElementById('view-loading').classList.remove('hidden');
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(input.files[0]);
-        img.onload = async () => {
-            if (model) {
-                const pred = await model.predict(img);
-                pred.forEach(p => {
-                    if (p.className.includes("Straight")) aiData.S = p.probability;
-                    if (p.className.includes("Wave")) aiData.N = p.probability;
-                    if (p.className.includes("Natural")) aiData.C = p.probability;
-                });
-            }
-            setTimeout(() => {
-                document.getElementById('view-loading').classList.add('hidden');
-                document.getElementById('view-survey').classList.remove('hidden');
-                initSurvey();
-            }, 3000);
-        };
-    }
-
-    let qIdx = 0;
-    function initSurvey() {
-        const qList = TEXTS[currentLang].qBank;
-        if (qIdx >= qList.length) return finalize();
-        const q = qList[qIdx];
-        document.getElementById('q-text').innerText = `Q${qIdx+1}. ${q.q}`;
-        const optArea = document.getElementById('q-options');
-        optArea.innerHTML = "";
-        [q.a, q.b, q.c].forEach((t, i) => {
-            const b = document.createElement('button');
-            b.className = 'btn';
-            b.innerText = t;
-            b.onclick = () => { surveyData[['S','N','C'][i]]++; qIdx++; initSurvey(); };
-            optArea.appendChild(b);
-        });
-    }
-
-    function finalize() {
-        document.getElementById('view-survey').classList.add('hidden');
-        document.getElementById('view-result').classList.remove('hidden');
-        const total = {
-            S: (aiData.S * 0.5) + ((surveyData.S / 10) * 0.5),
-            N: (aiData.N * 0.5) + ((surveyData.N / 10) * 0.5),
-            C: (aiData.C * 0.5) + ((surveyData.C / 10) * 0.5)
-        };
-        if (aiData.S + aiData.N + aiData.C > 0) winnerKey = Object.keys(total).reduce((a, b) => total[a] > total[b] ? a : b);
-        const tRes = TEXTS[currentLang].res[winnerKey];
-        const resData = currentGender === 'male' ? { title: tRes.mTitle, desc: tRes.mDesc } : { title: tRes.fTitle, desc: tRes.fDesc };
-        const imgMap = { 'S': { f: "./images/female_straight.jpg", m: "./images/male_straight.jpg" }, 'N': { f: "./images/female_wave.jpg", m: "./images/male_wave.jpg" }, 'C': { f: "./images/female_natural.jpg", m: "./images/male_natural.jpg" } };
-        const resImg = currentGender === 'male' ? imgMap[winnerKey].m : imgMap[winnerKey].f;
-        document.getElementById('res-title').innerText = resData.title;
-        document.getElementById('res-body').innerHTML = `<div style="text-align:center;"><img src="${resImg}" style="width:50%; max-width:150px; border:none; box-shadow:none; margin-bottom:20px;"></div>${resData.desc}`;
-    }
-
-    function downloadResult() {
-        html2canvas(document.getElementById('capture-area')).then(canvas => {
-            const link = document.createElement('a'); link.download = 'result.png';
-            link.href = canvas.toDataURL(); link.click();
-        });
-    }
-
-    function openShareMenu() {
-        if (navigator.share) {
-            navigator.share({ title: TEXTS[currentLang].shareTitle, url: window.location.href });
-        } else {
-            const dummy = document.createElement("input");
-            document.body.appendChild(dummy); dummy.value = window.location.href; dummy.select();
-            document.execCommand("copy"); document.body.removeChild(dummy);
-            const toast = document.getElementById("toast");
-            toast.classList.add("show"); setTimeout(() => { toast.classList.remove("show"); }, 2500);
+        function bmi() {
+            const h = document.getElementById('bh').value/100, w = document.getElementById('bw').value;
+            if(h>0 && w>0) { document.getElementById('br').innerText = (w/(h*h)).toFixed(1); }
         }
-    }
 
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        alert(currentLang === 'ko' ? '저작권 보호를 위해 이미지 무단 저장 및 복사를 금지합니다.' : 'Image saving/copying is disabled for copyright protection.');
-    });
-</script>
+        const fItems = [
+            {n:"싱잉볼", r:"맑은 소리로 집안의 탁한 기운을 정화하고 안정을 찾으세요.", u:"https://link.coupang.com/a/dyKsFd", i:"https://t4c.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/cef7/0bc01026da60025c185c3140e2c75143dfa47f067f2d004af9588d69848d.jpg"},
+            {n:"액막이 북어", r:"현관에 걸어 나쁜 기운을 막고 복이 들어오는 길을 지키세요.", u:"https://link.coupang.com/a/dyKusA", i:"https://t5a.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/396e/25b4bf5ff64f9001915d9ddc11d88d1b19bfd0cfaf022c3d6994d198d22d.jpg"},
+            {n:"장스탠드", r:"구석진 공간에 밝은 조명을 두어 성공운을 환하게 밝히세요.", u:"https://ozip.me/PkR1BgA?af", i:"https://prs.ohou.se/apne2/any/uploads/productions/v1-410686675410944.jpg?w=1280&h=1280&c=c"},
+            {n:"카페트", r:"바닥의 온기를 유지하여 집안의 좋은 기운이 새지 않게 가두세요.", u:"https://ozip.me/hxmqIiX?af", i:"https://image.ohousecdn.com/i/bucketplace-v2-development/uploads/productions/169838760927234776.jpg?w=1280&h=1280&c=c"},
+            {n:"무드등", r:"따뜻한 빛으로 침실 기운을 안정시키고 행운을 얻으세요.", u:"https://link.coupang.com/a/dyKxh1", i:"https://thumbnail6.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/08/28/12/6/6bca4f1b-9de9-4990-8c62-3f50a0833a49.png"},
+            {n:"대형 TV", r:"즐거운 파동을 거실에 채워 가족의 소통과 운의 흐름을 돕습니다.", u:"https://link.coupang.com/a/dyKzhL", i:"https://thumbnail6.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/10/15/15/2/2816e610-eebc-479c-b994-70880671f140.jpg"},
+            {n:"패브릭 소파", r:"부드러운 가구는 휴식의 질을 높여 에너지를 보충해 줍니다.", u:"https://ozip.me/r40SOYF?af", i:"https://image.ohousecdn.com/i/bucketplace-v2-development/uploads/openapi/4167132/1721871518212.jpg?w=1280&h=1280&c=c"},
+            {n:"싱그러운 식물", r:"살아있는 생명력을 배치하여 정체된 공간에 생동감을 더하세요.", u:"https://link.coupang.com/a/dyKCdg", i:"https://thumbnail10.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/180584597005505-fb4ce459-a8ae-462d-8bda-b4e16cb26501.jpg"},
+            {n:"인테리어 시계", r:"질서 있는 흐름을 통해 운이 들어오는 길을 환하게 열어줍니다.", u:"https://link.coupang.com/a/dyKEhn", i:"https://t3a.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/d9ee/3273e539fae3caef8f9226d37e77f8849891af26b1eb5f434d636de6c851.png"},
+            {n:"실링팬", r:"원활한 공기 소통은 재물과 복이 집안 곳곳으로 퍼지게 합니다.", u:"https://link.coupang.com/a/dyKFkf", i:"https://thumbnail1.coupangcdn.com/thumbnails/remote/212x212ex/image/retail/images/2025/12/08/14/9/0a67a9dc-ecaf-4a9a-971d-51296bc5040c.jpg"},
+            {n:"우드 수납장", r:"정리 정돈을 통해 흐트러진 운기를 바로잡고 안정감을 찾으세요.", u:"https://ozip.me/4ARjVhI?af", i:"https://prs.ohousecdn.com/apne2/any/uploads/productions/v1-393417029013504.jpg?w=1280&h=1280&c=c"},
+            {n:"홈사우나", r:"따뜻한 기운으로 정체된 혈을 뚫고 복이 들어오는 체질로 바꾸세요.", u:"https://link.coupang.com/a/dyKSYq", i:"https://thumbnail5.coupangcdn.com/thumbnails/remote/212x212ex/image/vendor_inventory/4f94/6c6381ff9643ca814ef14cd915e80d1e36b905111da517b18dc7930d9795.jpg"}
+        ];
+
+        const hTexts = [
+            "🔱 <b>오늘의 물병자리 분석</b><br>혁신적인 아이디어가 샘솟는 날입니다. 그동안 고민하던 문제의 해결책이 의외의 곳에서 나타납니다.<br>오후 3시경 당신의 창의력이 최고조에 달하니 중요한 기획은 이때 마무리하세요.<br>금전적으로는 지출을 최소화하고 미래를 위한 저축의 기운을 모으는 것이 유리합니다.<br>대인관계에서는 경청하는 태도가 행운을 부르며, 진솔한 대화가 운을 크게 돕습니다.<br>🏠 <b>풍수 조언</b>: 현관을 밝게 유지하고 불필요한 영수증을 즉시 정리하여 복을 맞이하세요.",
+            "🌊 <b>오늘의 물고기자리 분석</b><br>직관력이 예리해지는 하루입니다. 당신의 첫 느낌을 믿고 결정하는 것이 좋은 결과를 냅니다.<br>예술적인 감각이 빛을 발하니 취미 활동이나 창작 작업에 몰두하기에 최적의 시기입니다.<br>금전운은 상승세에 있으나 충동적인 쇼핑은 피해야 재물의 기운이 오래 머뭅니다.<br>주변 사람들에게 따뜻한 말 한마디를 건네보세요. 그것이 거대한 행운으로 돌아옵니다.<br>🏠 <b>풍수 조언</b>: 거실 화분의 잎을 정성스럽게 닦아주세요. 식물의 호흡이 곧 당신의 운입니다.",
+            "🔥 <b>오늘의 양자리 분석</b><br>넘치는 열정으로 새로운 프로젝트를 시작하기 좋습니다. 당신의 리더십이 빛을 발하는 날입니다.<br>다만 의욕이 앞서 성급한 결정을 내릴 수 있으니, 계약 전에는 신중하게 검토하세요.<br>건강운은 양호하나 하체 근력을 보강하는 운동을 병행하면 신체 활력이 배가됩니다.<br>소중한 친구와의 저녁 식사는 당신에게 새로운 기회와 정보를 가져다줄 것입니다.<br>🏠 <b>풍수 조언</b>: 침실의 조도를 낮추고 따뜻한 색감의 조명을 사용하여 안정의 기운을 높이세요.",
+            "🌱 <b>오늘의 황소자리 분석</b><br>끈기와 인내가 빛을 발하는 하루입니다. 꾸준히 노력해온 일에서 소중한 성과를 거두게 됩니다.<br>재물운이 매우 강력하니 투자나 저축 계획을 구체화하기에 더없이 좋은 타이밍입니다.<br>대인관계에서는 고집을 조금 꺾고 주변의 조언을 수용하면 예기치 못한 행운이 찾아옵니다.<br>여유로운 티타임을 통해 내면을 정돈하는 시간을 가지면 금전운이 더욱 상승합니다.<br>🏠 <b>풍수 조언</b>: 주방을 청결하게 유지하세요. 깨끗한 식탁이 집안의 재물복을 불러옵니다.",
+            "🗨️ <b>오늘의 쌍둥이자리 분석</b><br>커뮤니케이션 능력이 극대화되는 날입니다. 협상이나 미팅에서 당신의 의견이 관철됩니다.<br>새로운 정보를 얻기에 유리한 날이니 책을 읽거나 세미나에 참여하는 것도 추천합니다.<br>다만 가벼운 실언이 오해를 부를 수 있으니 말하기 전 한 번 더 생각하는 지혜가 필요합니다.<br>이동수가 있으니 여행이나 짧은 외출을 통해 기분을 전환하고 새로운 기운을 얻으세요.<br>🏠 <b>풍수 조언</b>: 거울을 깨끗하게 닦으세요. 맑은 거울이 당신의 사회적 신뢰도를 높여줍니다.",
+            "🌙 <b>오늘의 게자리 분석</b><br>감수성이 풍부해지고 가족과의 유대가 깊어지는 날입니다. 집안에 머물며 휴식하는 것이 좋습니다.<br>직관력이 뛰어나 타인의 마음을 잘 읽게 되니 소중한 인연과의 갈등을 해결할 수 있습니다.<br>재물운은 소폭 상승하나 지인을 통한 금전 거래는 신중하게 결정하는 것이 안전합니다.<br>자신만을 위한 소소한 선물을 준비해 보세요. 내면의 에너지가 충전되는 계기가 됩니다.<br>🏠 <b>풍수 조언</b>: 옷장을 정리하세요. 입지 않는 옷을 비워야 새로운 복이 들어올 공간이 생깁니다.",
+            "🦁 <b>오늘의 사자자리 분석</b><br>당신의 자신감이 주위 사람들을 매료시키는 날입니다. 주목받는 자리에서 능력을 마음껏 펼치세요.<br>어려운 과제를 해결할 지혜가 생기니 복잡했던 업무를 오늘 깔끔하게 처리할 수 있습니다.<br>금전적으로는 예상치 못한 수입이 생길 수 있으나, 유흥비로 쓰기보다 저축하는 것이 길합니다.<br>건강운이 최고조이니 활동적인 운동을 통해 몸의 순환을 원활하게 만드는 것이 좋습니다.<br>🏠 <b>풍수 조언</b>: 집안 동쪽 방향에 붉은색 소품을 두어 추진력과 성공의 기운을 보강하세요.",
+            "💎 <b>오늘의 처녀자리 분석</b><br>정교한 분석력과 세심함이 돋보이는 하루입니다. 작은 실수도 잡아내어 완벽한 성과를 냅니다.<br>계획했던 일을 실천하기에 좋은 날이니 미루어 두었던 청소나 정리를 시작해 보세요.<br>대인관계에서는 냉철함보다는 따뜻한 조언이 상대방에게 더 큰 감동을 주게 됩니다.<br>가벼운 산책을 통해 맑은 공기를 마시면 정체되었던 생각들이 명확하게 정리됩니다.<br>🏠 <b>풍수 조언</b>: 책상을 깔끔하게 비우세요. 정돈된 환경이 당신의 업무운을 극대화합니다.",
+            "⚖️ <b>오늘의 천칭자리 분석</b><br>균형과 조화가 완벽하게 이루어지는 날입니다. 갈등이 있던 관계가 자연스럽게 화해로 이어집니다.<br>미적 감각이 뛰어난 날이니 쇼핑이나 방 인테리어를 변경하기에 아주 좋은 타이밍입니다.<br>금전운은 안정적이지만 타인의 부탁을 거절하지 못해 손해를 볼 수 있으니 주의하세요.<br>향기가 좋은 차를 마시며 명상하면 당신을 돕는 귀인의 기운이 더욱 강해집니다.<br>🏠 <b>풍수 조언</b>: 욕실의 물기를 제거하고 환기를 시켜 습한 기운을 몰아내야 재물이 새지 않습니다.",
+            "🦂 <b>오늘의 전갈자리 분석</b><br>강력한 집중력으로 어려운 일을 돌파해낼 수 있는 날입니다. 당신의 의지가 승리를 부릅니다.<br>비밀스러운 정보나 소식을 듣게 될 수 있는데, 이를 잘 활용하면 큰 이득으로 연결됩니다.<br>금전운은 비밀 투자를 하기에 좋은 날이지만, 충분한 조사가 선행되어야 실패가 없습니다.<br>충분한 수면을 통해 에너지를 비축하세요. 내일의 더 큰 성장을 위한 준비가 필요합니다.<br>🏠 <b>풍수 조언</b>: 침대 머리 방향을 창문 쪽으로 두어 우주의 긍정적인 기운을 직접 받으세요.",
+            "🏹 <b>오늘의 사수자리 분석</b><br>모험심이 생기고 시야가 넓어지는 하루입니다. 새로운 분야에 관심을 가지면 행운이 따릅니다.<br>해외 소식이나 낯선 사람과의 만남에서 인생의 큰 영감을 얻게 될 확률이 매우 높습니다.<br>재물운은 유동적이니 큰 지출보다는 현재 자산을 지키며 관망하는 태도가 유리합니다.<br>긍정적인 마음가짐이 주변 사람들에게 전파되어 당신을 돕고자 하는 사람들이 늘어납니다.<br>🏠 <b>풍수 조언</b>: 현관에 밝은 풍경 소리가 나는 종을 달아 나쁜 기운을 쫓고 복을 부르세요.",
+            "🏔️ <b>오늘의 염소자리 분석</b><br>책임감 있는 모습으로 주변의 신뢰를 한 몸에 받는 날입니다. 당신의 커리어가 상승합니다.<br>장기적인 목표를 세우기에 아주 좋은 날이니 1년 뒤의 자신의 모습을 구체적으로 그려보세요.<br>금전적으로는 성실함의 대가로 보너스나 작은 선물을 받게 될 기분 좋은 소식이 있습니다.<br>가족과의 따뜻한 대화는 당신에게 가장 큰 힘이 되니 오늘만큼은 일찍 귀가해 보세요.<br>🏠 <b>풍수 조언</b>: 거실에 가족사진을 두어 집안의 화목함과 안정의 기운을 단단하게 다지세요."
+        ];
+
+        function show() {
+            const s = document.getElementById('z').value, t = document.getElementById('ht'), l = document.getElementById('la');
+            if(s) {
+                t.style.display = 'block';
+                const idx = parseInt(s) - 1;
+                t.innerHTML = hTexts[idx];
+                const item = fItems[idx % fItems.length];
+                l.innerHTML = `<a href="${item.u}" target="_blank" class="lucky-card"><img src="${item.i}"><div class="lucky-txt"><span style="font-size:0.75rem; color:var(--point-pink); font-weight:700;">🏠 추천: ${item.n}</span><br><span style="font-size:0.9rem;">✨ ${item.r}</span></div><div class="go-btn">></div></a>`;
+            } else { t.style.display='none'; l.innerHTML=''; }
+        }
+    </script>
 </body>
 </html>
