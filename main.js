@@ -159,6 +159,13 @@ class BmiCalculator {
 // --- Global Functions and Event Listeners ---
 
 async function initCounter() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('master') && urlParams.get('master') === 'true') {
+        document.getElementById('ct').innerText = '관리자';
+        document.getElementById('tt').innerText = '접속';
+        return;
+    }
+
     const ns = "borareview_v_final_layout";
     const kst = new Intl.DateTimeFormat('ko-KR', {timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date()).replace(/\. /g, '').replace(/\./g, '');
     try {
